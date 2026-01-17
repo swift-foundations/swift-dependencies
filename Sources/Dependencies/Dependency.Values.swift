@@ -18,8 +18,9 @@ public import Witnesses
 ///   nested types in generic contexts. Use ``Dependency.Values`` in all API usage.
 public struct __DependencyValues: Sendable {
     /// The underlying witness values.
-    @usableFromInline
-    internal var _witnessValues: Witness.Values
+    ///
+    /// - Note: Public for use by test support infrastructure.
+    public var _witnessValues: Witness.Values
 
     /// Creates an empty values container.
     @inlinable
@@ -28,8 +29,10 @@ public struct __DependencyValues: Sendable {
     }
 
     /// Creates a values container wrapping existing witness values.
-    @usableFromInline
-    internal init(_witnessValues: Witness.Values) {
+    ///
+    /// - Note: This initializer is public for use by test support infrastructure.
+    @inlinable
+    public init(_witnessValues: Witness.Values) {
         self._witnessValues = _witnessValues
     }
 

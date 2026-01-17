@@ -28,6 +28,10 @@ let package = Package(
             name: "Dependencies",
             targets: ["Dependencies"]
         ),
+        .library(
+            name: "Dependencies Test Support",
+            targets: ["Dependencies Test Support"]
+        ),
     ],
     dependencies: [
         .package(path: "../swift-witnesses"),
@@ -43,10 +47,19 @@ let package = Package(
             ],
             path: "Sources/Dependencies"
         ),
+        .target(
+            name: "Dependencies Test Support",
+            dependencies: [
+                "Dependencies",
+                .product(name: "Witnesses", package: "swift-witnesses"),
+            ],
+            path: "Tests/Support"
+        ),
         .testTarget(
             name: "Dependencies Tests",
             dependencies: [
                 "Dependencies",
+                "Dependencies Test Support",
                 .product(name: "Testing Extras", package: "swift-testing-extras"),
             ],
             path: "Tests/Dependencies Tests"
