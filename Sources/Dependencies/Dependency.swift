@@ -101,14 +101,4 @@ extension Dependency {
     /// - Note: Typealias to module-level ``__DependencyContext`` due to Swift's
     ///   limitation on referencing nested types in generic contexts.
     public typealias Context = __DependencyContext
-
-    /// Protocol for defining dependencies.
-    ///
-    /// - Note: Typealias to ``Witness.Key``.
-    public typealias Key = Witness.Key
-
-    /// Error type for unimplemented dependencies.
-    ///
-    /// - Note: Typealias to ``Witness.Unimplemented.Error``.
-    public typealias Error = Witness.Unimplemented.Error
 }
