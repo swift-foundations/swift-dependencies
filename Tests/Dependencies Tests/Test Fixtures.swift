@@ -37,7 +37,7 @@ extension TestAPI: Dependency.Key {
 }
 
 /// Extension for KeyPath-based access.
-extension __DependencyValues {
+extension Dependency.Values {
     var testAPI: TestAPI {
         get { self[TestAPI.self] }
         set { self[TestAPI.self] = newValue }
@@ -53,7 +53,7 @@ struct SimpleKey: Dependency.Key {
 }
 
 /// Extension for KeyPath-based access.
-extension __DependencyValues {
+extension Dependency.Values {
     var simple: String {
         get { self[SimpleKey.self] }
         set { self[SimpleKey.self] = newValue }
@@ -68,7 +68,7 @@ enum IntKey: Dependency.Key {
     static var testValue: Int { 42 }
 }
 
-extension __DependencyValues {
+extension Dependency.Values {
     var intValue: Int {
         get { self[IntKey.self] }
         set { self[IntKey.self] = newValue }
@@ -81,7 +81,7 @@ enum StringKey: Dependency.Key {
     static var testValue: String { "test-string" }
 }
 
-extension __DependencyValues {
+extension Dependency.Values {
     var stringValue: String {
         get { self[StringKey.self] }
         set { self[StringKey.self] = newValue }
@@ -94,7 +94,7 @@ enum EagerChildKey: Dependency.Key {
     static var testValue: Int { 1729 }
 }
 
-extension __DependencyValues {
+extension Dependency.Values {
     var eagerChild: Int {
         get { self[EagerChildKey.self] }
         set { self[EagerChildKey.self] = newValue }
@@ -107,7 +107,7 @@ enum LazyChildKey: Dependency.Key {
     static var testValue: @Sendable () -> Int { { 1729 } }
 }
 
-extension __DependencyValues {
+extension Dependency.Values {
     var lazyChild: @Sendable () -> Int {
         get { self[LazyChildKey.self] }
         set { self[LazyChildKey.self] = newValue }
@@ -121,7 +121,7 @@ enum ModeAwareKey: Dependency.Key {
     static var previewValue: String { "preview-default" }
 }
 
-extension __DependencyValues {
+extension Dependency.Values {
     var modeAware: String {
         get { self[ModeAwareKey.self] }
         set { self[ModeAwareKey.self] = newValue }
@@ -134,7 +134,7 @@ enum OptionalKey: Dependency.Key {
     static var testValue: String? { nil }
 }
 
-extension __DependencyValues {
+extension Dependency.Values {
     var optionalValue: String? {
         get { self[OptionalKey.self] }
         set { self[OptionalKey.self] = newValue }
@@ -182,7 +182,7 @@ enum CountingKey: Dependency.Key {
     }
 }
 
-extension __DependencyValues {
+extension Dependency.Values {
     var counting: CountingClient {
         get { self[CountingKey.self] }
         set { self[CountingKey.self] = newValue }
