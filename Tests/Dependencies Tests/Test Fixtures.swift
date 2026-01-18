@@ -59,3 +59,132 @@ extension __DependencyValues {
         set { self[SimpleKey.self] = newValue }
     }
 }
+
+// MARK: - Additional Test Keys
+
+/// Int key for testing
+enum IntKey: Dependency.Key {
+    static var liveValue: Int { -1 }
+    static var testValue: Int { 42 }
+}
+
+extension __DependencyValues {
+    var intValue: Int {
+        get { self[IntKey.self] }
+        set { self[IntKey.self] = newValue }
+    }
+}
+
+/// String key for testing (distinct from SimpleKey)
+enum StringKey: Dependency.Key {
+    static var liveValue: String { "live-string" }
+    static var testValue: String { "test-string" }
+}
+
+extension __DependencyValues {
+    var stringValue: String {
+        get { self[StringKey.self] }
+        set { self[StringKey.self] = newValue }
+    }
+}
+
+/// Eager child dependency - resolved at access time
+enum EagerChildKey: Dependency.Key {
+    static var liveValue: Int { 1729 }
+    static var testValue: Int { 1729 }
+}
+
+extension __DependencyValues {
+    var eagerChild: Int {
+        get { self[EagerChildKey.self] }
+        set { self[EagerChildKey.self] = newValue }
+    }
+}
+
+/// Lazy child dependency - resolved when closure is called
+enum LazyChildKey: Dependency.Key {
+    static var liveValue: @Sendable () -> Int { { 1729 } }
+    static var testValue: @Sendable () -> Int { { 1729 } }
+}
+
+extension __DependencyValues {
+    var lazyChild: @Sendable () -> Int {
+        get { self[LazyChildKey.self] }
+        set { self[LazyChildKey.self] = newValue }
+    }
+}
+
+/// Key with distinct values for each mode
+enum ModeAwareKey: Dependency.Key {
+    static var liveValue: String { "live-default" }
+    static var testValue: String { "test-default" }
+    static var previewValue: String { "preview-default" }
+}
+
+extension __DependencyValues {
+    var modeAware: String {
+        get { self[ModeAwareKey.self] }
+        set { self[ModeAwareKey.self] = newValue }
+    }
+}
+
+/// Key with optional value
+enum OptionalKey: Dependency.Key {
+    static var liveValue: String? { "live-optional" }
+    static var testValue: String? { nil }
+}
+
+extension __DependencyValues {
+    var optionalValue: String? {
+        get { self[OptionalKey.self] }
+        set { self[OptionalKey.self] = newValue }
+    }
+}
+
+/// Counting client for isolation testing
+struct CountingClient: Sendable {
+    private let _increment: @Sendable () -> Int
+
+    init(_ increment: @escaping @Sendable () -> Int) {
+        self._increment = increment
+    }
+
+    func increment() -> Int {
+        _increment()
+    }
+}
+
+/// Unsafe container for testing (not for production use)
+final class UnsafeCurrentValueContainer<Value>: @unchecked Sendable {
+    var value: Value
+
+    init(_ value: Value) {
+        self.value = value
+    }
+}
+
+/// Counting key that tracks invocations
+enum CountingKey: Dependency.Key {
+    static var liveValue: CountingClient {
+        let count = UnsafeCurrentValueContainer(0)
+        return CountingClient {
+            count.value += 1
+            return count.value
+        }
+    }
+
+    static var testValue: CountingClient {
+        let count = UnsafeCurrentValueContainer(0)
+        return CountingClient {
+            count.value += 1
+            return count.value
+        }
+    }
+}
+
+extension __DependencyValues {
+    var counting: CountingClient {
+        get { self[CountingKey.self] }
+        set { self[CountingKey.self] = newValue }
+    }
+}

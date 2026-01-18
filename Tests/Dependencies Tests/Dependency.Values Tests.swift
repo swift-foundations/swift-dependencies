@@ -103,3 +103,30 @@ extension __DependencyValues.Test.Integration {
         }
     }
 }
+
+// MARK: - Performance Tests
+
+extension __DependencyValues.Test.Performance {
+    @Test("Values initialization", .timed(iterations: 1000, warmup: 100))
+    func valuesInit() {
+        for _ in 0..<100 {
+            _ = Dependency<Never>.Values()
+        }
+    }
+
+    @Test("Subscript get", .timed(iterations: 1000, warmup: 100))
+    func subscriptGet() {
+        let values = Dependency<Never>.Context.current
+        for _ in 0..<100 {
+            _ = values[SimpleKey.self]
+        }
+    }
+
+    @Test("Subscript set", .timed(iterations: 1000, warmup: 100))
+    func subscriptSet() {
+        var values = Dependency<Never>.Values()
+        for i in 0..<100 {
+            values[SimpleKey.self] = "value-\(i)"
+        }
+    }
+}

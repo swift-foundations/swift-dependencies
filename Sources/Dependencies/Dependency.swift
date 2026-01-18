@@ -53,7 +53,7 @@ public import Witnesses
 @propertyWrapper
 public struct Dependency<Value: Sendable>: Sendable {
     @usableFromInline
-    nonisolated(unsafe) internal let keyPath: KeyPath<__DependencyValues, Value>
+    internal let accessor: _Accessor<Value>
 
     @usableFromInline
     internal let fileID: StaticString
@@ -61,7 +61,7 @@ public struct Dependency<Value: Sendable>: Sendable {
     @usableFromInline
     internal let line: UInt
 
-    /// Creates a dependency property wrapper.
+    /// Creates a dependency property wrapper using a KeyPath.
     ///
     /// - Parameters:
     ///   - keyPath: KeyPath to the dependency value on ``Dependency.Values``.
@@ -73,7 +73,31 @@ public struct Dependency<Value: Sendable>: Sendable {
         fileID: StaticString = #fileID,
         line: UInt = #line
     ) {
-        self.keyPath = keyPath
+        self.accessor = .keyPath(keyPath)
+        self.fileID = fileID
+        self.line = line
+    }
+
+    /// Creates a dependency property wrapper using a Key type.
+    ///
+    /// This initializer allows direct key-based access without requiring
+    /// a KeyPath extension on ``Dependency.Values``:
+    ///
+    /// ```swift
+    /// @Dependency(MyClock.self) var clock: MyClock
+    /// ```
+    ///
+    /// - Parameters:
+    ///   - key: The dependency key type.
+    ///   - fileID: The file where the dependency is declared (auto-captured).
+    ///   - line: The line where the dependency is declared (auto-captured).
+    @inlinable
+    public init<Key: Dependency.Key>(
+        _ key: Key.Type,
+        fileID: StaticString = #fileID,
+        line: UInt = #line
+    ) where Key.Value == Value {
+        self.accessor = .closure { $0[Key.self] }
         self.fileID = fileID
         self.line = line
     }
@@ -83,7 +107,24 @@ public struct Dependency<Value: Sendable>: Sendable {
     /// Resolves the value from the current ``Dependency.Context``.
     @inlinable
     public var wrappedValue: Value {
-        __DependencyContext.current[keyPath: keyPath]
+        accessor.getValue(from: __DependencyContext.current)
+    }
+}
+
+/// Internal accessor type for dependency resolution.
+@usableFromInline
+internal enum _Accessor<Value: Sendable>: @unchecked Sendable {
+    case keyPath(KeyPath<__DependencyValues, Value>)
+    case closure(@Sendable (__DependencyValues) -> Value)
+
+    @usableFromInline
+    func getValue(from values: __DependencyValues) -> Value {
+        switch self {
+        case .keyPath(let keyPath):
+            return values[keyPath: keyPath]
+        case .closure(let getter):
+            return getter(values)
+        }
     }
 }
 
