@@ -11,12 +11,12 @@
 // ===----------------------------------------------------------------------===//
 
 import Testing
-import Testing_Extras
+import Testing
 @testable import Dependencies
 
 @Suite("Dependency.Key.Strict")
 struct DependencyKeyStrictTests {
-    #TestSuites
+    #Tests
 }
 
 // MARK: - Unit Tests

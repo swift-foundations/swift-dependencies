@@ -15,7 +15,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "swift-dependencies",
+    name: "swift-dependencies-tests",
     platforms: [
         .macOS(.v26),
         .iOS(.v26),
@@ -23,36 +23,19 @@ let package = Package(
         .watchOS(.v26),
         .visionOS(.v26),
     ],
-    products: [
-        .library(
-            name: "Dependencies",
-            targets: ["Dependencies"]
-        ),
-        .library(
-            name: "Dependencies Test Support",
-            targets: ["Dependencies Test Support"]
-        ),
-    ],
     dependencies: [
-        .package(path: "../swift-witnesses"),
-        .package(path: "../swift-environment"),
+        .package(path: ".."),
+        .package(path: "../../swift-testing"),
     ],
     targets: [
-        .target(
-            name: "Dependencies",
+        .testTarget(
+            name: "Dependencies Tests",
             dependencies: [
-                .product(name: "Witnesses", package: "swift-witnesses"),
-                .product(name: "Environment", package: "swift-environment"),
+                .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "Dependencies Test Support", package: "swift-dependencies"),
+                .product(name: "Testing", package: "swift-testing"),
             ],
-            path: "Sources/Dependencies"
-        ),
-        .target(
-            name: "Dependencies Test Support",
-            dependencies: [
-                "Dependencies",
-                .product(name: "Witnesses", package: "swift-witnesses"),
-            ],
-            path: "Tests/Support"
+            path: "Dependencies Tests"
         ),
     ],
     swiftLanguageModes: [.v6]

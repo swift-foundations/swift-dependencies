@@ -11,12 +11,12 @@
 // ===----------------------------------------------------------------------===//
 
 import Testing
-import Testing_Extras
+import Testing
 @testable import Dependencies
 
 @Suite("Isolation")
 struct IsolationTests {
-    #TestSuites
+    #Tests
 }
 
 // MARK: - Unit Tests

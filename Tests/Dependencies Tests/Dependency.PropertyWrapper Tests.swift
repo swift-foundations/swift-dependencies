@@ -11,12 +11,12 @@
 // ===----------------------------------------------------------------------===//
 
 import Testing
-import Testing_Extras
+import Testing
 @testable import Dependencies
 
 @Suite("@Dependency Property Wrapper")
 struct DependencyPropertyWrapperTests {
-    #TestSuites
+    #Tests
 }
 
 /// Helper type that uses @Dependency property wrapper.

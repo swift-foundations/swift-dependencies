@@ -11,12 +11,12 @@
 // ===----------------------------------------------------------------------===//
 
 import Testing
-import Testing_Extras
+import Testing
 @testable import Dependencies
 
 @Suite("Dependency.Values.Comprehensive")
 struct DependencyValuesComprehensiveTests {
-    #TestSuites
+    #Tests
 }
 
 // MARK: - Unit Tests
