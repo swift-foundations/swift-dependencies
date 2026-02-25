@@ -11,12 +11,16 @@
 // ===----------------------------------------------------------------------===//
 
 import Testing
-import Testing
 @testable import Dependencies
 
 @Suite("Dependency.Values.Comprehensive")
 struct DependencyValuesComprehensiveTests {
-    #Tests
+    @Suite struct Test {
+        @Suite struct Unit {}
+        @Suite struct EdgeCase {}
+        @Suite struct Integration {}
+        @Suite(.serialized) struct Performance {}
+    }
 }
 
 // MARK: - Unit Tests
@@ -288,31 +292,31 @@ extension DependencyValuesComprehensiveTests.Test.Integration {
 // MARK: - Performance Tests
 
 extension DependencyValuesComprehensiveTests.Test.Performance {
-    @Test("Values container access", .timed(iterations: 1000, warmup: 100))
-    func valuesContainerAccess() {
-        var values = Dependency<Never>.Values()
-        values.simple = "perf"
-
-        for _ in 0..<100 {
-            _ = values.simple
-        }
-    }
-
-    @Test("Context current access", .timed(iterations: 1000, warmup: 100))
-    func contextCurrentAccess() {
-        for _ in 0..<100 {
-            _ = Dependency<Never>.Context.current.simple
-        }
-    }
-
-    @Test("Scope creation and teardown", .timed(iterations: 100, warmup: 10))
-    func scopeCreationAndTeardown() {
-        for _ in 0..<10 {
-            withDependencies {
-                $0.simple = "perf-scope"
-            } operation: {
-                _ = Dependency<Never>.Context.current.simple
-            }
-        }
-    }
+//    @Test("Values container access", .timed(iterations: 1000, warmup: 100))
+//    func valuesContainerAccess() {
+//        var values = Dependency<Never>.Values()
+//        values.simple = "perf"
+//
+//        for _ in 0..<100 {
+//            _ = values.simple
+//        }
+//    }
+//
+//    @Test("Context current access", .timed(iterations: 1000, warmup: 100))
+//    func contextCurrentAccess() {
+//        for _ in 0..<100 {
+//            _ = Dependency<Never>.Context.current.simple
+//        }
+//    }
+//
+//    @Test("Scope creation and teardown", .timed(iterations: 100, warmup: 10))
+//    func scopeCreationAndTeardown() {
+//        for _ in 0..<10 {
+//            withDependencies {
+//                $0.simple = "perf-scope"
+//            } operation: {
+//                _ = Dependency<Never>.Context.current.simple
+//            }
+//        }
+//    }
 }

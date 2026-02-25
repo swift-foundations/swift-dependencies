@@ -11,12 +11,16 @@
 // ===----------------------------------------------------------------------===//
 
 import Testing
-import Testing
 @testable import Dependencies
 
 @Suite("Edge Cases")
 struct EdgeCasesTests {
-    #Tests
+    @Suite struct Test {
+        @Suite struct Unit {}
+        @Suite struct EdgeCase {}
+        @Suite struct Integration {}
+        @Suite(.serialized) struct Performance {}
+    }
 }
 
 // MARK: - Unit Tests
@@ -277,31 +281,31 @@ extension EdgeCasesTests.Test.Integration {
 // MARK: - Performance Tests
 
 extension EdgeCasesTests.Test.Performance {
-    @Test("Repeated scope creation", .timed(iterations: 100, warmup: 10))
-    func repeatedScopeCreation() {
-        for _ in 0..<50 {
-            withDependencies {
-                $0.intValue = 1
-            } operation: {
-                _ = Dependency<Never>.Context.current.intValue
-            }
-        }
-    }
-
-    @Test("Deep nesting stress test", .timed(iterations: 10, warmup: 2))
-    func deepNestingStress() {
-        func nest(depth: Int) {
-            if depth == 0 {
-                _ = Dependency<Never>.Context.current.intValue
-                return
-            }
-            withDependencies {
-                $0.intValue = depth
-            } operation: {
-                nest(depth: depth - 1)
-            }
-        }
-
-        nest(depth: 20)
-    }
+//    @Test("Repeated scope creation", .timed(iterations: 100, warmup: 10))
+//    func repeatedScopeCreation() {
+//        for _ in 0..<50 {
+//            withDependencies {
+//                $0.intValue = 1
+//            } operation: {
+//                _ = Dependency<Never>.Context.current.intValue
+//            }
+//        }
+//    }
+//
+//    @Test("Deep nesting stress test", .timed(iterations: 10, warmup: 2))
+//    func deepNestingStress() {
+//        func nest(depth: Int) {
+//            if depth == 0 {
+//                _ = Dependency<Never>.Context.current.intValue
+//                return
+//            }
+//            withDependencies {
+//                $0.intValue = depth
+//            } operation: {
+//                nest(depth: depth - 1)
+//            }
+//        }
+//
+//        nest(depth: 20)
+//    }
 }

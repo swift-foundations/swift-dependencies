@@ -54,6 +54,15 @@ let package = Package(
             ],
             path: "Tests/Support"
         ),
+        .testTarget(
+            name: "Dependencies Tests",
+            dependencies: [
+                "Dependencies",
+                "Dependencies Test Support",
+                .product(name: "Witnesses", package: "swift-witnesses"),
+            ],
+            path: "Tests/Dependencies Tests"
+        ),
     ],
     swiftLanguageModes: [.v6]
 )

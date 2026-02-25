@@ -21,21 +21,16 @@ public struct __DependencyValues: Sendable {
     ///
     /// - Note: Public for use by test support infrastructure.
     public var _witnessValues: Witness.Values
-
-    /// Creates an empty values container.
-    @inlinable
-    public init() {
-        self._witnessValues = Witness.Values()
-    }
-
     /// Creates a values container wrapping existing witness values.
     ///
     /// - Note: This initializer is public for use by test support infrastructure.
     @inlinable
-    public init(_witnessValues: Witness.Values) {
+    public init(_witnessValues: Witness.Values = Witness.Values()) {
         self._witnessValues = _witnessValues
     }
+}
 
+extension __DependencyValues {
     /// Accesses the value for the given key type.
     ///
     /// For get operations without explicit mode, uses the current context's mode.
@@ -44,7 +39,7 @@ public struct __DependencyValues: Sendable {
     /// - Parameter key: The key type identifying the dependency.
     /// - Returns: The value for the key.
     @inlinable
-    public subscript<K: Witness.Key>(key: K.Type) -> K.Value {
+    public subscript<K: Witness.Key>(key: K.Type) -> K.Value where K.Value: Copyable {
         get { Witness.Context[key] }
         set { _witnessValues[key] = newValue }
     }

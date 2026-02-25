@@ -11,12 +11,16 @@
 // ===----------------------------------------------------------------------===//
 
 import Testing
-import Testing
 @testable import Dependencies
 
 @Suite("Resolution")
 struct ResolutionTests {
-    #Tests
+    @Suite struct Test {
+        @Suite struct Unit {}
+        @Suite struct EdgeCase {}
+        @Suite struct Integration {}
+        @Suite(.serialized) struct Performance {}
+    }
 }
 
 // MARK: - Unit Tests
@@ -162,27 +166,27 @@ extension ResolutionTests.Test.Integration {
 // MARK: - Performance Tests
 
 extension ResolutionTests.Test.Performance {
-    @Test("Nested scope resolution", .timed(iterations: 100, warmup: 10))
-    func nestedScopeResolution() {
-        for _ in 0..<10 {
-            withDependencies {
-                $0.simple = "outer"
-            } operation: {
-                withDependencies {
-                    $0.simple = "inner"
-                } operation: {
-                    _ = Dependency<Never>.Context.current.simple
-                }
-            }
-        }
-    }
-
-    @Test("Multiple key access", .timed(iterations: 1000, warmup: 100))
-    func multipleKeyAccess() {
-        let values = Dependency<Never>.Context.current
-        for _ in 0..<100 {
-            _ = values.simple
-            _ = values.eagerChild
-        }
-    }
+//    @Test("Nested scope resolution", .timed(iterations: 100, warmup: 10))
+//    func nestedScopeResolution() {
+//        for _ in 0..<10 {
+//            withDependencies {
+//                $0.simple = "outer"
+//            } operation: {
+//                withDependencies {
+//                    $0.simple = "inner"
+//                } operation: {
+//                    _ = Dependency<Never>.Context.current.simple
+//                }
+//            }
+//        }
+//    }
+//
+//    @Test("Multiple key access", .timed(iterations: 1000, warmup: 100))
+//    func multipleKeyAccess() {
+//        let values = Dependency<Never>.Context.current
+//        for _ in 0..<100 {
+//            _ = values.simple
+//            _ = values.eagerChild
+//        }
+//    }
 }

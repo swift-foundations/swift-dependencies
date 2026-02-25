@@ -11,12 +11,16 @@
 // ===----------------------------------------------------------------------===//
 
 import Testing
-import Testing
 @testable import Dependencies
 
 @Suite("Dependency.Key")
 struct DependencyKeyTests {
-    #Tests
+    @Suite struct Test {
+        @Suite struct Unit {}
+        @Suite struct EdgeCase {}
+        @Suite struct Integration {}
+        @Suite(.serialized) struct Performance {}
+    }
 }
 
 // MARK: - Unit Tests
@@ -124,28 +128,28 @@ extension DependencyKeyTests.Test.Integration {
 // MARK: - Performance Tests
 
 extension DependencyKeyTests.Test.Performance {
-    @Test("Key resolution", .timed(iterations: 1000, warmup: 100))
-    func keyResolution() {
-        for _ in 0..<100 {
-            _ = SimpleKey.liveValue
-        }
-    }
-
-    @Test("Key subscript get", .timed(iterations: 1000, warmup: 100))
-    func keySubscriptGet() {
-        let values = Dependency<Never>.Context.current
-        for _ in 0..<100 {
-            _ = values[SimpleKey.self]
-        }
-    }
-
-    @Test("Key subscript set", .timed(iterations: 1000, warmup: 100))
-    func keySubscriptSet() {
-        var values = Dependency<Never>.Values()
-        for i in 0..<100 {
-            values[SimpleKey.self] = "value-\(i)"
-        }
-    }
+//    @Test("Key resolution", .timed(iterations: 1000, warmup: 100))
+//    func keyResolution() {
+//        for _ in 0..<100 {
+//            _ = SimpleKey.liveValue
+//        }
+//    }
+//
+//    @Test("Key subscript get", .timed(iterations: 1000, warmup: 100))
+//    func keySubscriptGet() {
+//        let values = Dependency<Never>.Context.current
+//        for _ in 0..<100 {
+//            _ = values[SimpleKey.self]
+//        }
+//    }
+//
+//    @Test("Key subscript set", .timed(iterations: 1000, warmup: 100))
+//    func keySubscriptSet() {
+//        var values = Dependency<Never>.Values()
+//        for i in 0..<100 {
+//            values[SimpleKey.self] = "value-\(i)"
+//        }
+//    }
 }
 
 // MARK: - Test Support

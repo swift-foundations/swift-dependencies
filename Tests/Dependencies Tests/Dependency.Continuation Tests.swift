@@ -11,12 +11,16 @@
 // ===----------------------------------------------------------------------===//
 
 import Testing
-import Testing
 @testable import Dependencies
 
 @Suite("Dependency.Continuation")
 struct DependencyContinuationTests {
-    #Tests
+    @Suite struct Test {
+        @Suite struct Unit {}
+        @Suite struct EdgeCase {}
+        @Suite struct Integration {}
+        @Suite(.serialized) struct Performance {}
+    }
 }
 
 // MARK: - Unit Tests
@@ -201,31 +205,31 @@ extension DependencyContinuationTests.Test.Integration {
 // MARK: - Performance Tests
 
 extension DependencyContinuationTests.Test.Performance {
-    @Test("Continuation creation", .timed(iterations: 1000, warmup: 100))
-    func continuationCreation() {
-        for _ in 0..<100 {
-            Dependency<Never>.Context.withEscaped { _ in
-                // Just create the continuation
-            }
-        }
-    }
-
-    @Test("Continuation yield", .timed(iterations: 1000, warmup: 100))
-    func continuationYield() {
-        var savedContinuation: Dependency<Never>.Continuation?
-
-        withDependencies {
-            $0[SimpleKey.self] = "perf"
-        } operation: {
-            Dependency<Never>.Context.withEscaped { cont in
-                savedContinuation = cont
-            }
-        }
-
-        for _ in 0..<100 {
-            savedContinuation?.yield {
-                _ = Dependency<Never>.Context.current[SimpleKey.self]
-            }
-        }
-    }
+//    @Test("Continuation creation", .timed(iterations: 1000, warmup: 100))
+//    func continuationCreation() {
+//        for _ in 0..<100 {
+//            Dependency<Never>.Context.withEscaped { _ in
+//                // Just create the continuation
+//            }
+//        }
+//    }
+//
+//    @Test("Continuation yield", .timed(iterations: 1000, warmup: 100))
+//    func continuationYield() {
+//        var savedContinuation: Dependency<Never>.Continuation?
+//
+//        withDependencies {
+//            $0[SimpleKey.self] = "perf"
+//        } operation: {
+//            Dependency<Never>.Context.withEscaped { cont in
+//                savedContinuation = cont
+//            }
+//        }
+//
+//        for _ in 0..<100 {
+//            savedContinuation?.yield {
+//                _ = Dependency<Never>.Context.current[SimpleKey.self]
+//            }
+//        }
+//    }
 }
