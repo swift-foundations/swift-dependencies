@@ -32,10 +32,18 @@ let package = Package(
             name: "Dependencies Test Support",
             targets: ["Dependencies Test Support"]
         ),
+        .library(
+            name: "Clocks Dependency",
+            targets: ["Clocks Dependency"]
+        ),
+    ],
+    traits: [
+        .trait(name: "Clocks"),
     ],
     dependencies: [
         .package(path: "../swift-witnesses"),
         .package(path: "../swift-environment"),
+        .package(path: "../../swift-primitives/swift-clock-primitives"),
     ],
     targets: [
         .target(
@@ -53,6 +61,15 @@ let package = Package(
                 .product(name: "Witnesses", package: "swift-witnesses"),
             ],
             path: "Tests/Support"
+        ),
+        // MARK: - Integration
+        .target(
+            name: "Clocks Dependency",
+            dependencies: [
+                "Dependencies",
+                .product(name: "Clock Primitives", package: "swift-clock-primitives",
+                         condition: .when(traits: ["Clocks"])),
+            ]
         ),
         .testTarget(
             name: "Dependencies Tests",
@@ -73,6 +90,7 @@ for target in package.targets where ![.system, .binary, .plugin, .macro].contain
         .enableUpcomingFeature("ExistentialAny"),
         .enableUpcomingFeature("InternalImportsByDefault"),
         .enableUpcomingFeature("MemberImportVisibility"),
+        .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
         .enableExperimentalFeature("Lifetimes"),
         .enableExperimentalFeature("SuppressedAssociatedTypes"),
         .enableExperimentalFeature("SuppressedAssociatedTypesWithDefaults"),
