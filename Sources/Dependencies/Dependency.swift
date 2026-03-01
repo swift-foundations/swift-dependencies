@@ -27,9 +27,9 @@ public import Witnesses
 ///
 /// ```swift
 /// extension Dependency.Values {
-///     var clock: ContinuousClock {
-///         get { self[ContinuousClock.self] }
-///         set { self[ContinuousClock.self] = newValue }
+///     var clock: Clock.Continuous {
+///         get { self[Clock.Continuous.self] }
+///         set { self[Clock.Continuous.self] = newValue }
 ///     }
 /// }
 /// ```

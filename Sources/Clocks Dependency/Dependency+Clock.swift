@@ -17,7 +17,7 @@
 /// Dependency key providing a type-erased clock.
 ///
 /// Resolution chain:
-/// - **Live**: `ContinuousClock()` — real wall-clock time
+/// - **Live**: `Clock.Continuous()` — real wall-clock time
 /// - **Preview**: `Clock.Immediate()` — no suspension, instant resolution
 /// - **Test**: `Clock.Immediate()` — deterministic, no thread hops
 ///
@@ -28,7 +28,7 @@
 /// ```
 private enum ClockKey: Dependency.Key {
     static var liveValue: Clock.`Any`<Duration> {
-        Clock.`Any`(ContinuousClock())
+        Clock.`Any`(Clock.Continuous())
     }
 
     static var testValue: Clock.`Any`<Duration> {
@@ -45,7 +45,7 @@ private enum ClockKey: Dependency.Key {
 extension __DependencyValues {
     /// A type-erased clock for timing operations.
     ///
-    /// In production, resolves to `ContinuousClock`. In tests and previews,
+    /// In production, resolves to `Clock.Continuous`. In tests and previews,
     /// resolves to `Clock.Immediate` (no suspension, deterministic).
     ///
     /// ## Usage
