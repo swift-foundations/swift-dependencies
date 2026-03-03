@@ -46,10 +46,10 @@ public import Witnesses
 ///   - operation: The operation to execute with prepared values.
 /// - Returns: The result of the operation.
 /// - Throws: Rethrows any error from the operation.
-public func prepareDependencies<T>(
+public func prepareDependencies<T, E: Swift.Error>(
     _ configure: (Witness.Preparation.Store) -> Void,
-    operation: () async throws -> T
-) async rethrows -> T {
+    operation: () async throws(E) -> T
+) async throws(E) -> T {
     try await Witness.Preparation.with(configure, operation: operation)
 }
 
@@ -59,10 +59,9 @@ public func prepareDependencies<T>(
 ///   - configure: A closure that configures the preparation store.
 ///   - operation: The operation to execute with prepared values.
 /// - Returns: The result of the operation.
-/// - Throws: Rethrows any error from the operation.
-public func prepareDependencies<T>(
+public func prepareDependencies<T, E: Swift.Error>(
     _ configure: (Witness.Preparation.Store) -> Void,
-    operation: () throws -> T
-) rethrows -> T {
+    operation: () throws(E) -> T
+) throws(E) -> T {
     try Witness.Preparation.with(configure, operation: operation)
 }
