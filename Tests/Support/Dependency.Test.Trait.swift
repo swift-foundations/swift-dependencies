@@ -31,10 +31,10 @@ public struct __DependencyTestTrait: TestScoping, TestTrait, SuiteTrait {
     public var isRecursive: Bool { true }
 
     /// Provides the scoped context for test execution.
-    public func provideScope(
+    @concurrent public func provideScope(
         for test: Testing.Test,
         testCase: Testing.Test.Case?,
-        performing function: @Sendable () async throws -> Void
+        performing function: @Sendable @concurrent () async throws -> Void
     ) async throws {
         try await Witness.Context.with(isolation: nil, mode: .test, { witnessValues in
             if Self.isRoot {
