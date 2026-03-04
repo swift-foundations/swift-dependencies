@@ -11,7 +11,7 @@
 // ===----------------------------------------------------------------------===//
 
 public import Dependencies
-public import Witnesses
+import Witnesses
 
 extension Dependency {
     /// Test utilities for dependency injection.
@@ -41,10 +41,14 @@ extension Dependency.Test {
         _ modify: @escaping (inout __DependencyValues) -> Void,
         operation: () throws(E) -> T
     ) throws(E) -> T {
-        try Witness.Context.with(mode: .test, { witnessValues in
-            var depValues = __DependencyValues(_witnessValues: witnessValues)
+        try Witness.Context._withScope(mode: .test, { witnessValues, l1Values in
+            var depValues = __DependencyValues(
+                _witnessValues: witnessValues,
+                _l1Values: l1Values
+            )
             modify(&depValues)
             witnessValues = depValues._witnessValues
+            l1Values = depValues._l1Values
         }, operation: operation)
     }
 
@@ -60,10 +64,14 @@ extension Dependency.Test {
         _ modify: @escaping (inout __DependencyValues) -> Void,
         operation: () async throws(E) -> T
     ) async throws(E) -> T {
-        try await Witness.Context.with(isolation: isolation, mode: .test, { witnessValues in
-            var depValues = __DependencyValues(_witnessValues: witnessValues)
+        try await Witness.Context._withScope(isolation: isolation, mode: .test, { witnessValues, l1Values in
+            var depValues = __DependencyValues(
+                _witnessValues: witnessValues,
+                _l1Values: l1Values
+            )
             modify(&depValues)
             witnessValues = depValues._witnessValues
+            l1Values = depValues._l1Values
         }, operation: operation)
     }
 }
