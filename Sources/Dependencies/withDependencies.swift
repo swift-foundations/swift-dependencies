@@ -66,8 +66,7 @@ public func withDependencies<T, E: Error>(
     _ modify: (inout __DependencyValues) -> Void,
     operation: () throws(E) -> T
 ) throws(E) -> T {
-    var l1Values = Dependency_Primitives.Dependency.Scope.current
-    return try Witness.Context.with({ witnessValues in
+    try Witness.Context._withScope({ witnessValues, l1Values in
         var depValues = __DependencyValues(
             _witnessValues: witnessValues,
             _l1Values: l1Values
@@ -75,9 +74,7 @@ public func withDependencies<T, E: Error>(
         modify(&depValues)
         witnessValues = depValues._witnessValues
         l1Values = depValues._l1Values
-    }, operation: { () throws(E) -> T in
-        try Dependency_Primitives.Dependency.Scope.with({ $0 = l1Values }, operation: operation)
-    })
+    }, operation: operation)
 }
 
 /// Executes an async operation with modified dependency values.
@@ -97,8 +94,7 @@ public func withDependencies<T, E: Error>(
     _ modify: (inout __DependencyValues) -> Void,
     operation: () async throws(E) -> T
 ) async throws(E) -> T {
-    var l1Values = Dependency_Primitives.Dependency.Scope.current
-    return try await Witness.Context.with(isolation: isolation, { witnessValues in
+    try await Witness.Context._withScope(isolation: isolation, { witnessValues, l1Values in
         var depValues = __DependencyValues(
             _witnessValues: witnessValues,
             _l1Values: l1Values
@@ -106,9 +102,7 @@ public func withDependencies<T, E: Error>(
         modify(&depValues)
         witnessValues = depValues._witnessValues
         l1Values = depValues._l1Values
-    }, operation: { () async throws(E) -> T in
-        try await Dependency_Primitives.Dependency.Scope.with({ $0 = l1Values }, operation: operation)
-    })
+    }, operation: operation)
 }
 
 /// Executes an operation with modified dependency values and mode.
@@ -135,9 +129,7 @@ public func withDependencies<T, E: Error>(
     _ modify: ((inout __DependencyValues) -> Void)? = nil,
     operation: () throws(E) -> T
 ) throws(E) -> T {
-    var l1Values = Dependency_Primitives.Dependency.Scope.current
-    l1Values.isTestContext = (mode == .test)
-    return try Witness.Context.with(mode: mode, { witnessValues in
+    try Witness.Context._withScope(mode: mode, { witnessValues, l1Values in
         if let modify {
             var depValues = __DependencyValues(
                 _witnessValues: witnessValues,
@@ -147,9 +139,7 @@ public func withDependencies<T, E: Error>(
             witnessValues = depValues._witnessValues
             l1Values = depValues._l1Values
         }
-    }, operation: { () throws(E) -> T in
-        try Dependency_Primitives.Dependency.Scope.with({ $0 = l1Values }, operation: operation)
-    })
+    }, operation: operation)
 }
 
 /// Executes an async operation with modified dependency values and mode.
@@ -168,9 +158,7 @@ public func withDependencies<T, E: Error>(
     _ modify: ((inout __DependencyValues) -> Void)? = nil,
     operation: () async throws(E) -> T
 ) async throws(E) -> T {
-    var l1Values = Dependency_Primitives.Dependency.Scope.current
-    l1Values.isTestContext = (mode == .test)
-    return try await Witness.Context.with(isolation: isolation, mode: mode, { witnessValues in
+    try await Witness.Context._withScope(isolation: isolation, mode: mode, { witnessValues, l1Values in
         if let modify {
             var depValues = __DependencyValues(
                 _witnessValues: witnessValues,
@@ -180,7 +168,5 @@ public func withDependencies<T, E: Error>(
             witnessValues = depValues._witnessValues
             l1Values = depValues._l1Values
         }
-    }, operation: { () async throws(E) -> T in
-        try await Dependency_Primitives.Dependency.Scope.with({ $0 = l1Values }, operation: operation)
-    })
+    }, operation: operation)
 }
