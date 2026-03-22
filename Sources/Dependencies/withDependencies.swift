@@ -83,18 +83,17 @@ public func withDependencies<T, E: Error>(
 /// in the caller's isolation context.
 ///
 /// - Parameters:
-///   - isolation: The actor isolation context for the operation.
 ///   - modify: A closure that modifies the dependency values for the scope.
 ///   - operation: The async operation to execute with the modified values.
 /// - Returns: The result of the operation.
 /// - Throws: The typed error from the operation.
 @inlinable
+nonisolated(nonsending)
 public func withDependencies<T, E: Error>(
-    isolation: isolated (any Actor)? = #isolation,
     _ modify: (inout __DependencyValues) -> Void,
-    operation: () async throws(E) -> T
+    operation: nonisolated(nonsending) () async throws(E) -> T
 ) async throws(E) -> T {
-    try await Witness.Context._withScope(isolation: isolation, { witnessValues, l1Values in
+    try await Witness.Context._withScope({ witnessValues, l1Values in
         var depValues = __DependencyValues(
             _witnessValues: witnessValues,
             _l1Values: l1Values
@@ -145,20 +144,19 @@ public func withDependencies<T, E: Error>(
 /// Executes an async operation with modified dependency values and mode.
 ///
 /// - Parameters:
-///   - isolation: The actor isolation context for the operation.
 ///   - mode: The execution mode for the scope.
 ///   - modify: A closure that modifies the dependency values for the scope.
 ///   - operation: The async operation to execute with the modified values.
 /// - Returns: The result of the operation.
 /// - Throws: The typed error from the operation.
 @inlinable
+nonisolated(nonsending)
 public func withDependencies<T, E: Error>(
-    isolation: isolated (any Actor)? = #isolation,
     mode: __DependencyContext.Mode,
     _ modify: ((inout __DependencyValues) -> Void)? = nil,
-    operation: () async throws(E) -> T
+    operation: nonisolated(nonsending) () async throws(E) -> T
 ) async throws(E) -> T {
-    try await Witness.Context._withScope(isolation: isolation, mode: mode, { witnessValues, l1Values in
+    try await Witness.Context._withScope(mode: mode, { witnessValues, l1Values in
         if let modify {
             var depValues = __DependencyValues(
                 _witnessValues: witnessValues,

@@ -59,12 +59,12 @@ extension Dependency.Test {
     ///   - operation: The async test operation to execute.
     /// - Returns: The result of the operation.
     /// - Throws: The typed error from the operation.
+    nonisolated(nonsending)
     public static func withOverrides<T, E: Error>(
-        isolation: isolated (any Actor)? = #isolation,
         _ modify: @escaping (inout __DependencyValues) -> Void,
-        operation: () async throws(E) -> T
+        operation: nonisolated(nonsending) () async throws(E) -> T
     ) async throws(E) -> T {
-        try await Witness.Context._withScope(isolation: isolation, mode: .test, { witnessValues, l1Values in
+        try await Witness.Context._withScope(mode: .test, { witnessValues, l1Values in
             var depValues = __DependencyValues(
                 _witnessValues: witnessValues,
                 _l1Values: l1Values

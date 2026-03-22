@@ -36,7 +36,7 @@ public struct __DependencyTestTrait: TestScoping, TestTrait, SuiteTrait {
         testCase: Testing.Test.Case?,
         performing function: @Sendable @concurrent () async throws -> Void
     ) async throws {
-        try await Witness.Context.with(isolation: nil, mode: .test, { witnessValues in
+        try await Witness.Context.with(mode: .test, { witnessValues in
             if Self.isRoot {
                 witnessValues = Witness.Values()
             }
