@@ -52,7 +52,7 @@ extension __DependencyValues {
     ///
     /// ```swift
     /// @Dependency(\.clock) var clock
-    /// try await clock.sleep(until: clock.now.advanced(by: .seconds(1)))
+    /// try await clock.sleep(for: .seconds(1))
     /// ```
     ///
     /// ## Test Override
