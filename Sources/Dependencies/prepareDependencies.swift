@@ -46,9 +46,10 @@ public import Witnesses
 ///   - operation: The operation to execute with prepared values.
 /// - Returns: The result of the operation.
 /// - Throws: Rethrows any error from the operation.
+nonisolated(nonsending)
 public func prepareDependencies<T, E: Swift.Error>(
     _ configure: (Witness.Preparation.Store) -> Void,
-    operation: () async throws(E) -> T
+    operation: nonisolated(nonsending) () async throws(E) -> T
 ) async throws(E) -> T {
     try await Witness.Preparation.with(configure, operation: operation)
 }
