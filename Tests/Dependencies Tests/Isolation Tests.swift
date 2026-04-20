@@ -26,8 +26,8 @@ struct IsolationTests {
 // MARK: - Unit Tests
 
 extension IsolationTests.Test.Unit {
-    @Test("Each test starts with clean context")
-    func cleanContext1() {
+    @Test
+    func `Each test starts with clean context`() {
         @Dependency(\.counting) var counting
 
         // First access should return fresh test value
@@ -35,8 +35,8 @@ extension IsolationTests.Test.Unit {
         #expect(value == 1)
     }
 
-    @Test("Each test starts with clean context (duplicate)")
-    func cleanContext2() {
+    @Test
+    func `Each test starts with clean context (duplicate)`() {
         @Dependency(\.counting) var counting
 
         // Should also be fresh, not polluted from cleanContext1
@@ -44,8 +44,8 @@ extension IsolationTests.Test.Unit {
         #expect(value == 1)
     }
 
-    @Test("withDependencies creates isolated scope")
-    func isolatedScope() {
+    @Test
+    func `withDependencies creates isolated scope`() {
         @Dependency(\.simple) var simple
 
         // Outside scope
@@ -66,8 +66,8 @@ extension IsolationTests.Test.Unit {
 // MARK: - Edge Case Tests
 
 extension IsolationTests.Test.EdgeCase {
-    @Test("Concurrent scopes are isolated")
-    func concurrentScopesIsolated() async {
+    @Test
+    func `Concurrent scopes are isolated`() async {
         let iterations = 10
 
         await withThrowingTaskGroup(of: Void.self) { group in
@@ -90,8 +90,8 @@ extension IsolationTests.Test.EdgeCase {
         }
     }
 
-    @Test("Nested scopes maintain correct hierarchy")
-    func nestedScopeHierarchy() {
+    @Test
+    func `Nested scopes maintain correct hierarchy`() {
         withDependencies {
             $0.simple = "level-1"
             $0.eagerChild = 1
@@ -117,8 +117,8 @@ extension IsolationTests.Test.EdgeCase {
         }
     }
 
-    @Test("Mode isolation across scopes")
-    func modeIsolation() {
+    @Test
+    func `Mode isolation across scopes`() {
         withDependencies(mode: .test) { _ in
         } operation: {
             #expect(Dependency<Never>.Context.mode == .test)
@@ -133,8 +133,8 @@ extension IsolationTests.Test.EdgeCase {
         }
     }
 
-    @Test("Continuation preserves isolation")
-    func continuationPreservesIsolation() {
+    @Test
+    func `Continuation preserves isolation`() {
         var captured1: String?
         var captured2: String?
 
@@ -174,8 +174,8 @@ extension IsolationTests.Test.EdgeCase {
 // MARK: - Integration Tests
 
 extension IsolationTests.Test.Integration {
-    @Test("Task isolation with TaskGroup")
-    func taskGroupIsolation() async {
+    @Test
+    func `Task isolation with TaskGroup`() async {
         await withDependencies {
             $0.simple = "group-root"
         } operation: {
@@ -205,8 +205,8 @@ extension IsolationTests.Test.Integration {
         }
     }
 
-    @Test("Async sequence isolation")
-    func asyncSequenceIsolation() async {
+    @Test
+    func `Async sequence isolation`() async {
         await withDependencies {
             $0.simple = "sequence-context"
         } operation: {

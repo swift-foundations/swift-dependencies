@@ -25,21 +25,21 @@ extension __DependencyContext {
 // MARK: - Unit Tests
 
 extension __DependencyContext.Test.Unit {
-    @Test("Current returns default values outside scope")
-    func currentOutsideScope() async throws {
+    @Test
+    func `Current returns default values outside scope`() async throws {
         let value = Dependency<Never>.Context.current[SimpleKey.self]
         // Outside any scope, mode is .live
         #expect(value == "live")
     }
 
-    @Test("Mode defaults to live outside scope")
-    func modeDefaultsToLive() {
+    @Test
+    func `Mode defaults to live outside scope`() {
         let mode = Dependency<Never>.Context.mode
         #expect(mode == .live)
     }
 
-    @Test("Detect returns correct mode based on environment")
-    func detectMode() {
+    @Test
+    func `Detect returns correct mode based on environment`() {
         // Note: In actual test environment, this might return .test
         // because XCTestConfigurationFilePath or SWIFT_TESTING may be set
         let detected = Dependency<Never>.Context.detect()
@@ -51,8 +51,8 @@ extension __DependencyContext.Test.Unit {
 // MARK: - Edge Case Tests
 
 extension __DependencyContext.Test.EdgeCase {
-    @Test("Context tracks mode changes through withDependencies")
-    func modeTracking() throws {
+    @Test
+    func `Context tracks mode changes through withDependencies`() throws {
         // Start in live mode
         #expect(Dependency<Never>.Context.mode == .live)
 
@@ -71,8 +71,8 @@ extension __DependencyContext.Test.EdgeCase {
 // MARK: - Integration Tests
 
 extension __DependencyContext.Test.Integration {
-    @Test("Context delegates to Witness.Context")
-    func delegatesToWitness() async throws {
+    @Test
+    func `Context delegates to Witness.Context`() async throws {
         // Verify that Dependency.Context.current reflects Witness.Context changes
         try await Witness.Context.with { values in
             values[SimpleKey.self] = "witness-override"

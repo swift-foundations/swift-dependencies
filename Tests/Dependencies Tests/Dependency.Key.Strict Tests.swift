@@ -26,16 +26,16 @@ struct DependencyKeyStrictTests {
 // MARK: - Unit Tests
 
 extension DependencyKeyStrictTests.Test.Unit {
-    @Test("Strict key conforms to Witness.Key")
-    func conformsToWitnessKey() {
+    @Test
+    func `Strict key conforms to Witness.Key`() {
         // Verify StrictTestKey conforms to the protocol hierarchy
         let _: any Dependency<Never>.Key.Strict.Type = StrictTestKey.self
         let _: any Dependency<Never>.Key.Type = StrictTestKey.self
         #expect(Bool(true))
     }
 
-    @Test("Strict key has liveValue")
-    func hasLiveValue() {
+    @Test
+    func `Strict key has liveValue`() {
         let value = StrictTestKey.liveValue
         #expect(value == "strict-live")
     }
@@ -44,8 +44,8 @@ extension DependencyKeyStrictTests.Test.Unit {
 // MARK: - Edge Case Tests
 
 extension DependencyKeyStrictTests.Test.EdgeCase {
-    @Test("Strict key override works in test mode")
-    func overrideInTestMode() {
+    @Test
+    func `Strict key override works in test mode`() {
         withDependencies(mode: .test) {
             $0[StrictTestKey.self] = "overridden"
         } operation: {
@@ -54,8 +54,8 @@ extension DependencyKeyStrictTests.Test.EdgeCase {
         }
     }
 
-    @Test("Strict key override works in preview mode")
-    func overrideInPreviewMode() {
+    @Test
+    func `Strict key override works in preview mode`() {
         withDependencies(mode: .preview) {
             $0[StrictTestKey.self] = "preview-override"
         } operation: {
@@ -64,8 +64,8 @@ extension DependencyKeyStrictTests.Test.EdgeCase {
         }
     }
 
-    @Test("Strict key works in live mode without override")
-    func liveWithoutOverride() {
+    @Test
+    func `Strict key works in live mode without override`() {
         // In live mode, strict keys use their liveValue
         withDependencies(mode: .live) { _ in
         } operation: {
@@ -78,8 +78,8 @@ extension DependencyKeyStrictTests.Test.EdgeCase {
 // MARK: - Integration Tests
 
 extension DependencyKeyStrictTests.Test.Integration {
-    @Test("Strict key with property wrapper")
-    func withPropertyWrapper() {
+    @Test
+    func `Strict key with property wrapper`() {
         struct Consumer: Sendable {
             @Dependency(\.strictTest) var strictTest
 
@@ -97,8 +97,8 @@ extension DependencyKeyStrictTests.Test.Integration {
         }
     }
 
-    @Test("Multiple strict keys can be overridden together")
-    func multipleStrictKeys() {
+    @Test
+    func `Multiple strict keys can be overridden together`() {
         withDependencies {
             $0[StrictTestKey.self] = "first"
             $0[AnotherStrictKey.self] = 42

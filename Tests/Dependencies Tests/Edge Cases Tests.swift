@@ -26,8 +26,8 @@ struct EdgeCasesTests {
 // MARK: - Unit Tests
 
 extension EdgeCasesTests.Test.Unit {
-    @Test("Dependency with type-based subscript access")
-    func typedKeySubscript() {
+    @Test
+    func `Dependency with type-based subscript access`() {
         struct MyDependency: Dependency.Key {
             typealias Value = Int
             static var liveValue: Int { -1 }
@@ -41,8 +41,8 @@ extension EdgeCasesTests.Test.Unit {
         }
     }
 
-    @Test("Dependency with struct key and value")
-    func structKeyAndValue() {
+    @Test
+    func `Dependency with struct key and value`() {
         struct Config: Sendable, Equatable {
             let name: String
             let version: Int
@@ -63,8 +63,8 @@ extension EdgeCasesTests.Test.Unit {
         }
     }
 
-    @Test("Dependency with closure value")
-    func closureValue() {
+    @Test
+    func `Dependency with closure value`() {
         struct ActionKey: Dependency.Key {
             typealias Value = @Sendable () -> Int
             static var liveValue: @Sendable () -> Int { { -1 } }
@@ -83,8 +83,8 @@ extension EdgeCasesTests.Test.Unit {
 // MARK: - Edge Case Tests
 
 extension EdgeCasesTests.Test.EdgeCase {
-    @Test("Deeply nested model hierarchy")
-    func deepModelHierarchy() {
+    @Test
+    func `Deeply nested model hierarchy`() {
         class NestedModel: @unchecked Sendable {
             func getIntValue() -> Int {
                 Dependency<Never>.Context.current.intValue
@@ -125,8 +125,8 @@ extension EdgeCasesTests.Test.EdgeCase {
         #expect(model1.getStringValue() == "live-string")
     }
 
-    @Test("Multiple dependencies in single access")
-    func multipleDependenciesInSingleAccess() {
+    @Test
+    func `Multiple dependencies in single access`() {
         struct MultiAccessor: Sendable {
             func allValues() -> (Int, Int, String) {
                 let context = Dependency<Never>.Context.current
@@ -147,8 +147,8 @@ extension EdgeCasesTests.Test.EdgeCase {
         }
     }
 
-    @Test("Empty withDependencies scope")
-    func emptyScope() {
+    @Test
+    func `Empty withDependencies scope`() {
         withDependencies(mode: .test) { _ in
             // No modifications
         } operation: {
@@ -157,8 +157,8 @@ extension EdgeCasesTests.Test.EdgeCase {
         }
     }
 
-    @Test("Throws preservation in sync context")
-    func throwsPreservationSync() throws {
+    @Test
+    func `Throws preservation in sync context`() throws {
         struct TestError: Error, Equatable {}
 
         #expect(throws: TestError.self) {
@@ -170,8 +170,8 @@ extension EdgeCasesTests.Test.EdgeCase {
         }
     }
 
-    @Test("Throws preservation in async context")
-    func throwsPreservationAsync() async throws {
+    @Test
+    func `Throws preservation in async context`() async throws {
         struct AsyncError: Error, Equatable {}
 
         await #expect(throws: AsyncError.self) {
@@ -188,8 +188,8 @@ extension EdgeCasesTests.Test.EdgeCase {
 // MARK: - Integration Tests
 
 extension EdgeCasesTests.Test.Integration {
-    @Test("Actor with dependencies")
-    func actorWithDependencies() async {
+    @Test
+    func `Actor with dependencies`() async {
         actor DependentActor {
             func getValue() -> Int {
                 Dependency<Never>.Context.current.intValue
@@ -206,8 +206,8 @@ extension EdgeCasesTests.Test.Integration {
         }
     }
 
-    @Test("Global actor isolated dependencies")
-    func globalActorIsolation() async {
+    @Test
+    func `Global actor isolated dependencies`() async {
         @MainActor
         struct MainActorType {
             func getValue() -> Int {
@@ -224,8 +224,8 @@ extension EdgeCasesTests.Test.Integration {
         }
     }
 
-    @Test("Dependency in computed property")
-    func dependencyInComputedProperty() {
+    @Test
+    func `Dependency in computed property`() {
         struct ComputedType: Sendable {
             var base: Int {
                 Dependency<Never>.Context.current.intValue
@@ -250,8 +250,8 @@ extension EdgeCasesTests.Test.Integration {
         }
     }
 
-    @Test("Concurrent access to same dependency")
-    func concurrentAccessSameDependency() async {
+    @Test
+    func `Concurrent access to same dependency`() async {
         let iterations = 100
 
         await withDependencies {

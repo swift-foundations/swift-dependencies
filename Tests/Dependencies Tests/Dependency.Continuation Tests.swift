@@ -26,15 +26,15 @@ struct DependencyContinuationTests {
 // MARK: - Unit Tests
 
 extension DependencyContinuationTests.Test.Unit {
-    @Test("Continuation is typealias for Witness.Context.Escaped")
-    func continuationTypealias() {
+    @Test
+    func `Continuation is typealias for Witness.Context.Escaped`() {
         // This test verifies the typealias compiles correctly
         // The actual type checking happens at compile time
         #expect(Bool(true))
     }
 
-    @Test("withEscaped provides continuation")
-    func withEscapedProvidesContinuation() {
+    @Test
+    func `withEscaped provides continuation`() {
         var capturedContinuation: Dependency<Never>.Continuation?
 
         Dependency<Never>.Context.withEscaped { continuation in
@@ -48,8 +48,8 @@ extension DependencyContinuationTests.Test.Unit {
 // MARK: - Edge Case Tests
 
 extension DependencyContinuationTests.Test.EdgeCase {
-    @Test("Continuation captures current dependencies")
-    func capturesCurrentDependencies() {
+    @Test
+    func `Continuation captures current dependencies`() {
         var capturedValue: String?
 
         withDependencies {
@@ -65,8 +65,8 @@ extension DependencyContinuationTests.Test.EdgeCase {
         #expect(capturedValue == "captured")
     }
 
-    @Test("Continuation works outside original scope")
-    func worksOutsideOriginalScope() {
+    @Test
+    func `Continuation works outside original scope`() {
         var savedContinuation: Dependency<Never>.Continuation?
 
         withDependencies {
@@ -86,8 +86,8 @@ extension DependencyContinuationTests.Test.EdgeCase {
         #expect(capturedValue == "escaped")
     }
 
-    @Test("Multiple continuations are independent")
-    func multipleContinuationsIndependent() {
+    @Test
+    func `Multiple continuations are independent`() {
         var continuation1: Dependency<Never>.Continuation?
         var continuation2: Dependency<Never>.Continuation?
 
@@ -126,8 +126,8 @@ extension DependencyContinuationTests.Test.EdgeCase {
 // MARK: - Integration Tests
 
 extension DependencyContinuationTests.Test.Integration {
-    @Test("Continuation with async work")
-    func asyncWork() async {
+    @Test
+    func `Continuation with async work`() async {
         var savedContinuation: Dependency<Never>.Continuation?
 
         await withDependencies {
@@ -146,8 +146,8 @@ extension DependencyContinuationTests.Test.Integration {
         #expect(capturedValue == "async-captured")
     }
 
-    @Test("Continuation preserves mode")
-    func preservesMode() {
+    @Test
+    func `Continuation preserves mode`() {
         var savedContinuation: Dependency<Never>.Continuation?
 
         withDependencies(mode: .test) { _ in
@@ -165,8 +165,8 @@ extension DependencyContinuationTests.Test.Integration {
         #expect(capturedMode == .test)
     }
 
-    @Test("Continuation with nested scopes")
-    func nestedScopes() {
+    @Test
+    func `Continuation with nested scopes`() {
         var outerContinuation: Dependency<Never>.Continuation?
         var innerContinuation: Dependency<Never>.Continuation?
 

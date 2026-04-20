@@ -20,13 +20,13 @@ import Dependencies_Test_Support
 @Suite("Dependency Test Traits", .dependencies)
 struct DependencyTraitTests {
 
-    @Test("dependencies trait sets test mode")
-    func testMode() {
+    @Test
+    func `dependencies trait sets test mode`() {
         Dependency<Never>.Test.assertMode(.test)
     }
 
-    @Test("dependencies trait provides isolation")
-    func isolation() {
+    @Test
+    func `dependencies trait provides isolation`() {
         @Dependency(\.counting) var counting
         let client = counting  // Resolve once to preserve state
         #expect(client.increment() == 1)
@@ -105,8 +105,8 @@ struct NestedSuiteTests {
     @Suite("Inner Suite with Override", .dependency(\.simple, "outer"))
     struct InnerSuite {
 
-        @Test("inherits outer override")
-        func inheritsOuter() {
+        @Test
+        func `inherits outer override`() {
             @Dependency(\.simple) var simple
             #expect(simple == "outer")
         }
@@ -132,16 +132,16 @@ struct NestedSuiteTests {
 @Suite("Trait Isolation", .dependencies)
 struct TraitIsolationTests {
 
-    @Test("test 1 - counting starts fresh")
-    func test1() {
+    @Test
+    func `test 1 - counting starts fresh`() {
         @Dependency(\.counting) var counting
         let client = counting  // Resolve once to preserve state
         #expect(client.increment() == 1)
         #expect(client.increment() == 2)
     }
 
-    @Test("test 2 - counting also starts fresh (isolated from test 1)")
-    func test2() {
+    @Test
+    func `test 2 - counting also starts fresh (isolated from test 1)`() {
         @Dependency(\.counting) var counting
         let client = counting  // Resolve once to preserve state
         #expect(client.increment() == 1)
@@ -154,8 +154,8 @@ struct TraitIsolationTests {
 @Suite("Mode Resolution with Traits", .dependencies)
 struct ModeResolutionTests {
 
-    @Test("uses testValue by default in trait scope")
-    func usesTestValue() {
+    @Test
+    func `uses testValue by default in trait scope`() {
         @Dependency(\.modeAware) var modeAware
         #expect(modeAware == "test-default")
     }

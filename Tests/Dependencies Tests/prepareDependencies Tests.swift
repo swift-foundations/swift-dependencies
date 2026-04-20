@@ -27,8 +27,8 @@ struct PrepareDependenciesTests {
 // MARK: - Unit Tests
 
 extension PrepareDependenciesTests.Test.Unit {
-    @Test("Sync preparation runs without error")
-    func syncPreparation() {
+    @Test
+    func `Sync preparation runs without error`() {
         let result = prepareDependencies { store in
             store.set(SimpleKey.self, value: "prepared")
         } operation: {
@@ -38,8 +38,8 @@ extension PrepareDependenciesTests.Test.Unit {
         #expect(result == "completed")
     }
 
-    @Test("Async preparation runs without error")
-    func asyncPreparation() async {
+    @Test
+    func `Async preparation runs without error`() async {
         let result = await prepareDependencies { store in
             store.set(SimpleKey.self, value: "async-prepared")
         } operation: {
@@ -49,8 +49,8 @@ extension PrepareDependenciesTests.Test.Unit {
         #expect(result == "async-completed")
     }
 
-    @Test("Return value passes through")
-    func returnValue() {
+    @Test
+    func `Return value passes through`() {
         let result = prepareDependencies { _ in
         } operation: {
             42
@@ -59,8 +59,8 @@ extension PrepareDependenciesTests.Test.Unit {
         #expect(result == 42)
     }
 
-    @Test("Store accepts values")
-    func storeAcceptsValues() {
+    @Test
+    func `Store accepts values`() {
         prepareDependencies { store in
             // Verify store.set compiles and runs
             store.set(SimpleKey.self, value: "value1")
@@ -79,8 +79,8 @@ extension PrepareDependenciesTests.Test.Unit {
 // MARK: - Edge Case Tests
 
 extension PrepareDependenciesTests.Test.EdgeCase {
-    @Test("Empty preparation works")
-    func emptyPreparation() {
+    @Test
+    func `Empty preparation works`() {
         let result = prepareDependencies { _ in
             // No configuration
         } operation: {
@@ -90,8 +90,8 @@ extension PrepareDependenciesTests.Test.EdgeCase {
         #expect(result == "empty")
     }
 
-    @Test("Nested preparations work")
-    func nestedPreparations() {
+    @Test
+    func `Nested preparations work`() {
         let result = prepareDependencies { store in
             store.set(SimpleKey.self, value: "outer")
         } operation: {
@@ -109,8 +109,8 @@ extension PrepareDependenciesTests.Test.EdgeCase {
 // MARK: - Integration Tests
 
 extension PrepareDependenciesTests.Test.Integration {
-    @Test("withDependencies works inside prepareDependencies")
-    func withDependenciesInside() {
+    @Test
+    func `withDependencies works inside prepareDependencies`() {
         prepareDependencies { _ in
         } operation: {
             withDependencies {
@@ -122,8 +122,8 @@ extension PrepareDependenciesTests.Test.Integration {
         }
     }
 
-    @Test("Preparation store is accessible")
-    func storeIsAccessible() {
+    @Test
+    func `Preparation store is accessible`() {
         prepareDependencies { store in
             store.set(SimpleKey.self, value: "stored")
 
@@ -135,8 +135,8 @@ extension PrepareDependenciesTests.Test.Integration {
         }
     }
 
-    @Test("Current preparation store available in operation")
-    func currentStoreAvailable() {
+    @Test
+    func `Current preparation store available in operation`() {
         prepareDependencies { store in
             store.set(SimpleKey.self, value: "current")
         } operation: {

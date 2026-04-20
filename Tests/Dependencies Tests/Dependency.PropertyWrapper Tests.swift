@@ -40,8 +40,8 @@ struct DependencyConsumer: Sendable {
 // MARK: - Unit Tests
 
 extension DependencyPropertyWrapperTests.Test.Unit {
-    @Test("Property wrapper accesses current context value")
-    func propertyWrapperAccess() throws {
+    @Test
+    func `Property wrapper accesses current context value`() throws {
         let consumer = DependencyConsumer()
 
         try withDependencies {
@@ -52,8 +52,8 @@ extension DependencyPropertyWrapperTests.Test.Unit {
         }
     }
 
-    @Test("Property wrapper uses default when not overridden")
-    func propertyWrapperDefault() {
+    @Test
+    func `Property wrapper uses default when not overridden`() {
         let consumer = DependencyConsumer()
         let value = consumer.getSimple()
         #expect(value == "live")
@@ -63,8 +63,8 @@ extension DependencyPropertyWrapperTests.Test.Unit {
 // MARK: - Edge Case Tests
 
 extension DependencyPropertyWrapperTests.Test.EdgeCase {
-    @Test("Property wrapper reflects scope changes")
-    func scopeChanges() throws {
+    @Test
+    func `Property wrapper reflects scope changes`() throws {
         let consumer = DependencyConsumer()
 
         // Before scope
@@ -81,8 +81,8 @@ extension DependencyPropertyWrapperTests.Test.EdgeCase {
         #expect(consumer.getSimple() == "live")
     }
 
-    @Test("Multiple property wrappers work independently")
-    func multipleWrappers() async throws {
+    @Test
+    func `Multiple property wrappers work independently`() async throws {
         let consumer = DependencyConsumer()
 
         try await withDependencies {
@@ -102,8 +102,8 @@ extension DependencyPropertyWrapperTests.Test.EdgeCase {
 // MARK: - Integration Tests
 
 extension DependencyPropertyWrapperTests.Test.Integration {
-    @Test("Property wrapper works with nested scopes")
-    func nestedScopes() throws {
+    @Test
+    func `Property wrapper works with nested scopes`() throws {
         let consumer = DependencyConsumer()
 
         try withDependencies {
@@ -121,8 +121,8 @@ extension DependencyPropertyWrapperTests.Test.Integration {
         }
     }
 
-    @Test("Property wrapper preserves context across await")
-    func asyncContextPreservation() async throws {
+    @Test
+    func `Property wrapper preserves context across await`() async throws {
         let consumer = DependencyConsumer()
 
         try await withDependencies {

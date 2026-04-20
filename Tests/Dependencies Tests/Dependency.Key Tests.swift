@@ -26,15 +26,15 @@ struct DependencyKeyTests {
 // MARK: - Unit Tests
 
 extension DependencyKeyTests.Test.Unit {
-    @Test("Key is typealias for Witness.Key")
-    func keyTypealias() {
+    @Test
+    func `Key is typealias for Witness.Key`() {
         // Verify the typealias works by using a conforming type
         let _: any Dependency<Never>.Key.Type = SimpleKey.self
         #expect(true)
     }
 
-    @Test("Key provides mode-based resolution")
-    func modeBasedResolution() throws {
+    @Test
+    func `Key provides mode-based resolution`() throws {
         // Live mode
         let liveValue = SimpleKey.liveValue
         #expect(liveValue == "live")
@@ -48,8 +48,8 @@ extension DependencyKeyTests.Test.Unit {
         #expect(previewValue == "preview")
     }
 
-    @Test("Key default chain: testValue falls back to previewValue")
-    func testFallsBackToPreview() {
+    @Test
+    func `Key default chain: testValue falls back to previewValue`() {
         // TestOnlyKey only defines testValue
         let testValue = TestOnlyKey.testValue
         #expect(testValue == "test-only")
@@ -59,8 +59,8 @@ extension DependencyKeyTests.Test.Unit {
 // MARK: - Edge Case Tests
 
 extension DependencyKeyTests.Test.EdgeCase {
-    @Test("Key with complex value type")
-    func complexValueType() async throws {
+    @Test
+    func `Key with complex value type`() async throws {
         try await withDependencies {
             $0.testAPI = TestAPI(
                 fetch: { id in "complex-\(id)" },
@@ -73,8 +73,8 @@ extension DependencyKeyTests.Test.EdgeCase {
         }
     }
 
-    @Test("Key subscript access in Values")
-    func subscriptAccess() throws {
+    @Test
+    func `Key subscript access in Values`() throws {
         try withDependencies {
             $0[SimpleKey.self] = "subscript-value"
         } operation: {
@@ -83,8 +83,8 @@ extension DependencyKeyTests.Test.EdgeCase {
         }
     }
 
-    @Test("KeyPath access in Values")
-    func keyPathAccess() throws {
+    @Test
+    func `KeyPath access in Values`() throws {
         try withDependencies {
             $0.simple = "keypath-value"
         } operation: {
@@ -97,8 +97,8 @@ extension DependencyKeyTests.Test.EdgeCase {
 // MARK: - Integration Tests
 
 extension DependencyKeyTests.Test.Integration {
-    @Test("Key resolution respects context mode")
-    func contextModeResolution() throws {
+    @Test
+    func `Key resolution respects context mode`() throws {
         // In test mode, SimpleKey returns "test"
         try withDependencies(mode: .test) { _ in
         } operation: {
@@ -114,8 +114,8 @@ extension DependencyKeyTests.Test.Integration {
         }
     }
 
-    @Test("Key override takes precedence over mode")
-    func overrideTakesPrecedence() throws {
+    @Test
+    func `Key override takes precedence over mode`() throws {
         try withDependencies(mode: .test) {
             $0[SimpleKey.self] = "explicit-override"
         } operation: {

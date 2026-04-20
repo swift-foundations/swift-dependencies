@@ -26,8 +26,8 @@ struct DependencyValuesComprehensiveTests {
 // MARK: - Unit Tests
 
 extension DependencyValuesComprehensiveTests.Test.Unit {
-    @Test("Values container stores and retrieves values")
-    func storesAndRetrievesValues() {
+    @Test
+    func `Values container stores and retrieves values`() {
         withDependencies {
             $0.simple = "stored"
         } operation: {
@@ -35,8 +35,8 @@ extension DependencyValuesComprehensiveTests.Test.Unit {
         }
     }
 
-    @Test("Values container allows multiple keys")
-    func multipleKeys() {
+    @Test
+    func `Values container allows multiple keys`() {
         withDependencies {
             $0.simple = "simple"
             $0.eagerChild = 42
@@ -46,8 +46,8 @@ extension DependencyValuesComprehensiveTests.Test.Unit {
         }
     }
 
-    @Test("Values container overwrites existing values")
-    func overwritesExisting() {
+    @Test
+    func `Values container overwrites existing values`() {
         withDependencies {
             $0.simple = "first"
             $0.simple = "second"
@@ -56,8 +56,8 @@ extension DependencyValuesComprehensiveTests.Test.Unit {
         }
     }
 
-    @Test("Context mode affects default resolution")
-    func contextModeAffectsDefaults() {
+    @Test
+    func `Context mode affects default resolution`() {
         withDependencies(mode: .test) { _ in
         } operation: {
             let value = Dependency<Never>.Context.current.modeAware
@@ -81,8 +81,8 @@ extension DependencyValuesComprehensiveTests.Test.Unit {
 // MARK: - Edge Case Tests
 
 extension DependencyValuesComprehensiveTests.Test.EdgeCase {
-    @Test("Empty modification preserves existing values")
-    func emptyModificationPreserves() {
+    @Test
+    func `Empty modification preserves existing values`() {
         withDependencies {
             $0.simple = "original"
         } operation: {
@@ -95,8 +95,8 @@ extension DependencyValuesComprehensiveTests.Test.EdgeCase {
         }
     }
 
-    @Test("Nil-like values can be stored")
-    func nilLikeValues() {
+    @Test
+    func `Nil-like values can be stored`() {
         withDependencies {
             $0.optionalValue = nil
         } operation: {
@@ -105,8 +105,8 @@ extension DependencyValuesComprehensiveTests.Test.EdgeCase {
         }
     }
 
-    @Test("Value types are copied correctly")
-    func valueTypesCopied() {
+    @Test
+    func `Value types are copied correctly`() {
         struct Counter: Sendable {
             var count: Int
         }
@@ -128,8 +128,8 @@ extension DependencyValuesComprehensiveTests.Test.EdgeCase {
         #expect(captured?.count == 10)
     }
 
-    @Test("Reference types share identity")
-    func referenceTypesShareIdentity() {
+    @Test
+    func `Reference types share identity`() {
         final class RefType: @unchecked Sendable {
             var value: Int
             init(value: Int) { self.value = value }
@@ -150,8 +150,8 @@ extension DependencyValuesComprehensiveTests.Test.EdgeCase {
         }
     }
 
-    @Test("Scope isolation - changes don't leak")
-    func scopeIsolation() {
+    @Test
+    func `Scope isolation - changes don't leak`() {
         withDependencies {
             $0.simple = "outer"
         } operation: {
@@ -169,8 +169,8 @@ extension DependencyValuesComprehensiveTests.Test.EdgeCase {
         }
     }
 
-    @Test("Async scope isolation")
-    func asyncScopeIsolation() async {
+    @Test
+    func `Async scope isolation`() async {
         await withDependencies {
             $0.simple = "async-outer"
         } operation: {
@@ -200,8 +200,8 @@ extension DependencyValuesComprehensiveTests.Test.EdgeCase {
 // MARK: - Integration Tests
 
 extension DependencyValuesComprehensiveTests.Test.Integration {
-    @Test("withDependencies returns operation result")
-    func withDependenciesReturnsResult() {
+    @Test
+    func `withDependencies returns operation result`() {
         let result = withDependencies {
             $0.simple = "for-result"
         } operation: {
@@ -211,8 +211,8 @@ extension DependencyValuesComprehensiveTests.Test.Integration {
         #expect(result == "for-result")
     }
 
-    @Test("withDependencies propagates errors")
-    func withDependenciesPropagatesErrors() throws {
+    @Test
+    func `withDependencies propagates errors`() throws {
         struct TestError: Error, Equatable {}
 
         #expect(throws: TestError.self) {
@@ -224,8 +224,8 @@ extension DependencyValuesComprehensiveTests.Test.Integration {
         }
     }
 
-    @Test("Async withDependencies returns operation result")
-    func asyncWithDependenciesReturnsResult() async {
+    @Test
+    func `Async withDependencies returns operation result`() async {
         let result = await withDependencies {
             $0.simple = "async-result"
         } operation: {
@@ -236,8 +236,8 @@ extension DependencyValuesComprehensiveTests.Test.Integration {
         #expect(result == "async-result")
     }
 
-    @Test("Async withDependencies propagates errors")
-    func asyncWithDependenciesPropagatesErrors() async throws {
+    @Test
+    func `Async withDependencies propagates errors`() async throws {
         struct AsyncTestError: Error, Equatable {}
 
         await #expect(throws: AsyncTestError.self) {
@@ -250,8 +250,8 @@ extension DependencyValuesComprehensiveTests.Test.Integration {
         }
     }
 
-    @Test("Context propagates through Task boundaries")
-    func contextPropagatesThroughTaskBoundaries() async {
+    @Test
+    func `Context propagates through Task boundaries`() async {
         await withDependencies {
             $0.simple = "task-propagated"
         } operation: {
@@ -263,8 +263,8 @@ extension DependencyValuesComprehensiveTests.Test.Integration {
         }
     }
 
-    @Test("Context propagates through detached tasks with continuation")
-    func contextPropagatesThroughDetachedWithContinuation() async throws {
+    @Test
+    func `Context propagates through detached tasks with continuation`() async throws {
         final class Box: @unchecked Sendable {
             var value: String?
         }

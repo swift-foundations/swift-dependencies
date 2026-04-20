@@ -25,8 +25,8 @@ extension __DependencyValues {
 // MARK: - Unit Tests
 
 extension __DependencyValues.Test.Unit {
-    @Test("Subscript get uses context")
-    func subscriptGet() async throws {
+    @Test
+    func `Subscript get uses context`() async throws {
         try await withDependencies(mode: .test) { _ in
             // Empty modification
         } operation: {
@@ -35,8 +35,8 @@ extension __DependencyValues.Test.Unit {
         }
     }
 
-    @Test("Subscript set stores value")
-    func subscriptSet() throws {
+    @Test
+    func `Subscript set stores value`() throws {
         try withDependencies {
             $0[SimpleKey.self] = "custom"
         } operation: {
@@ -45,8 +45,8 @@ extension __DependencyValues.Test.Unit {
         }
     }
 
-    @Test("Empty initialization creates empty container")
-    func emptyInit() {
+    @Test
+    func `Empty initialization creates empty container`() {
         let values = Dependency<Never>.Values()
         // Can access values, will use defaults
         // This just verifies initialization works
@@ -58,8 +58,8 @@ extension __DependencyValues.Test.Unit {
 // MARK: - Edge Case Tests
 
 extension __DependencyValues.Test.EdgeCase {
-    @Test("KeyPath-based access works")
-    func keyPathAccess() throws {
+    @Test
+    func `KeyPath-based access works`() throws {
         try withDependencies {
             $0.simple = "keypath-value"
         } operation: {
@@ -68,8 +68,8 @@ extension __DependencyValues.Test.EdgeCase {
         }
     }
 
-    @Test("Multiple keys can be set")
-    func multipleKeys() async throws {
+    @Test
+    func `Multiple keys can be set`() async throws {
         try await withDependencies {
             $0[SimpleKey.self] = "first"
             $0.testAPI = TestAPI(
@@ -91,8 +91,8 @@ extension __DependencyValues.Test.EdgeCase {
 // MARK: - Integration Tests
 
 extension __DependencyValues.Test.Integration {
-    @Test("Values wrapper correctly delegates to Witness.Values")
-    func delegatesStorage() throws {
+    @Test
+    func `Values wrapper correctly delegates to Witness.Values`() throws {
         // Verify mutations go through to Witness.Values
         try withDependencies {
             $0[SimpleKey.self] = "stored"

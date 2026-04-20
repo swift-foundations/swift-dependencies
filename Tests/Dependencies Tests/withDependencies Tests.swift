@@ -26,8 +26,8 @@ struct WithDependenciesTests {
 // MARK: - Unit Tests
 
 extension WithDependenciesTests.Test.Unit {
-    @Test("Basic override works")
-    func basicOverride() throws {
+    @Test
+    func `Basic override works`() throws {
         let result = try withDependencies {
             $0[SimpleKey.self] = "overridden"
         } operation: {
@@ -37,8 +37,8 @@ extension WithDependenciesTests.Test.Unit {
         #expect(result == "overridden")
     }
 
-    @Test("Typed throws preserved")
-    func typedThrows() throws {
+    @Test
+    func `Typed throws preserved`() throws {
         enum TestError: Error { case expected }
 
         func throwingOp() throws(TestError) -> String {
@@ -54,8 +54,8 @@ extension WithDependenciesTests.Test.Unit {
         }
     }
 
-    @Test("Mode-aware override works")
-    func modeAwareOverride() throws {
+    @Test
+    func `Mode-aware override works`() throws {
         try withDependencies(mode: .test) { _ in
             // Empty modification - just setting mode
         } operation: {
@@ -69,8 +69,8 @@ extension WithDependenciesTests.Test.Unit {
 // MARK: - Edge Case Tests
 
 extension WithDependenciesTests.Test.EdgeCase {
-    @Test("Nested scopes work correctly")
-    func nestedScopes() throws {
+    @Test
+    func `Nested scopes work correctly`() throws {
         try withDependencies {
             $0[SimpleKey.self] = "outer"
         } operation: {
@@ -86,8 +86,8 @@ extension WithDependenciesTests.Test.EdgeCase {
         }
     }
 
-    @Test("Empty modification preserves existing values")
-    func emptyModification() throws {
+    @Test
+    func `Empty modification preserves existing values`() throws {
         try withDependencies {
             $0[SimpleKey.self] = "set"
         } operation: {
@@ -101,8 +101,8 @@ extension WithDependenciesTests.Test.EdgeCase {
         }
     }
 
-    @Test("Return value passes through")
-    func returnValue() throws {
+    @Test
+    func `Return value passes through`() throws {
         let result = try withDependencies { _ in } operation: {
             42
         }
@@ -113,8 +113,8 @@ extension WithDependenciesTests.Test.EdgeCase {
 // MARK: - Integration Tests
 
 extension WithDependenciesTests.Test.Integration {
-    @Test("Async variant works")
-    func asyncVariant() async throws {
+    @Test
+    func `Async variant works`() async throws {
         let result = try await withDependencies {
             $0[SimpleKey.self] = "async-value"
         } operation: {
@@ -125,8 +125,8 @@ extension WithDependenciesTests.Test.Integration {
         #expect(result == "async-value")
     }
 
-    @Test("Async with mode works")
-    func asyncWithMode() async throws {
+    @Test
+    func `Async with mode works`() async throws {
         try await withDependencies(mode: .preview) {
             $0[SimpleKey.self] = "preview-override"
         } operation: {
@@ -136,8 +136,8 @@ extension WithDependenciesTests.Test.Integration {
         }
     }
 
-    @Test("Context preserved across await points")
-    func contextAcrossAwait() async throws {
+    @Test
+    func `Context preserved across await points`() async throws {
         try await withDependencies {
             $0.testAPI = TestAPI(
                 fetch: { id in "preserved-\(id)" },
@@ -155,8 +155,8 @@ extension WithDependenciesTests.Test.Integration {
         }
     }
 
-    @Test("Delegates to Witness.Context.with")
-    func delegatesToWitness() throws {
+    @Test
+    func `Delegates to Witness.Context.with`() throws {
         try withDependencies {
             $0[SimpleKey.self] = "delegated"
         } operation: {

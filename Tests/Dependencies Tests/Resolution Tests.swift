@@ -26,22 +26,22 @@ struct ResolutionTests {
 // MARK: - Unit Tests
 
 extension ResolutionTests.Test.Unit {
-    @Test("Eager dependency resolution")
-    func eagerResolution() {
+    @Test
+    func `Eager dependency resolution`() {
         @Dependency(\.eagerChild) var eagerChild: Int
 
         #expect(eagerChild == 1729)
     }
 
-    @Test("Lazy dependency resolution")
-    func lazyResolution() {
+    @Test
+    func `Lazy dependency resolution`() {
         @Dependency(\.lazyChild) var lazyChild: @Sendable () -> Int
 
         #expect(lazyChild() == 1729)
     }
 
-    @Test("Dependency access outside scope uses defaults")
-    func defaultsOutsideScope() {
+    @Test
+    func `Dependency access outside scope uses defaults`() {
         @Dependency(\.simple) var simple: String
 
         // Outside withDependencies, uses mode-based default
@@ -52,8 +52,8 @@ extension ResolutionTests.Test.Unit {
 // MARK: - Edge Case Tests
 
 extension ResolutionTests.Test.EdgeCase {
-    @Test("Eager dependency with override")
-    func eagerDependencyWithOverride() {
+    @Test
+    func `Eager dependency with override`() {
         @Dependency(\.eagerChild) var eagerChild: Int
 
         #expect(eagerChild == 1729)
@@ -65,8 +65,8 @@ extension ResolutionTests.Test.EdgeCase {
         }
     }
 
-    @Test("Lazy dependency with override")
-    func lazyDependencyWithOverride() {
+    @Test
+    func `Lazy dependency with override`() {
         @Dependency(\.lazyChild) var lazyChild: @Sendable () -> Int
 
         #expect(lazyChild() == 1729)
@@ -78,8 +78,8 @@ extension ResolutionTests.Test.EdgeCase {
         }
     }
 
-    @Test("Deep nesting preserves overrides")
-    func deepNestingPreservesOverrides() {
+    @Test
+    func `Deep nesting preserves overrides`() {
         withDependencies {
             $0.simple = "level-1"
         } operation: {
@@ -114,8 +114,8 @@ extension ResolutionTests.Test.EdgeCase {
 // MARK: - Integration Tests
 
 extension ResolutionTests.Test.Integration {
-    @Test("Multiple dependencies resolved together")
-    func multipleDependenciesResolved() {
+    @Test
+    func `Multiple dependencies resolved together`() {
         withDependencies {
             $0.simple = "a"
             $0.eagerChild = 100
@@ -128,8 +128,8 @@ extension ResolutionTests.Test.Integration {
         }
     }
 
-    @Test("Async resolution preserves context")
-    func asyncResolutionPreservesContext() async {
+    @Test
+    func `Async resolution preserves context`() async {
         await withDependencies {
             $0.simple = "async-value"
         } operation: {
@@ -141,8 +141,8 @@ extension ResolutionTests.Test.Integration {
         }
     }
 
-    @Test("Resolution with mode switching")
-    func resolutionWithModeSwitching() {
+    @Test
+    func `Resolution with mode switching`() {
         // Start in test mode
         withDependencies(mode: .test) { _ in
         } operation: {
