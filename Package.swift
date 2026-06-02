@@ -41,9 +41,9 @@ let package = Package(
         .trait(name: "Clocks"),
     ],
     dependencies: [
-        .package(path: "../swift-witnesses"),
-        .package(path: "../swift-environment"),
-        .package(path: "../../swift-primitives/swift-clock-primitives"),
+        .package(url: "https://github.com/swift-foundations/swift-witnesses.git", branch: "main"),
+        .package(url: "https://github.com/swift-foundations/swift-environment.git", branch: "main"),
+        .package(url: "https://github.com/swift-primitives/swift-clock-primitives.git", branch: "main"),
     ],
     targets: [
         .target(
