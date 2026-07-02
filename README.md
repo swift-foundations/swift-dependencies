@@ -97,7 +97,7 @@ Three library products. Module import names replace spaces with underscores (`im
 ## Community
 
 <!-- BEGIN: discussion -->
-*Discussion thread will be created at first public flip.*
+*Discussion thread will be created at first public release.*
 <!-- END: discussion -->
 
 ## License
