@@ -11,6 +11,7 @@
 // ===----------------------------------------------------------------------===//
 
 import Testing
+
 @testable import Dependencies
 
 @Suite("Dependency.Key.Strict")
@@ -114,23 +115,23 @@ extension DependencyKeyStrictTests.Test.Integration {
 // MARK: - Performance Tests
 
 extension DependencyKeyStrictTests.Test.Performance {
-//    @Test("Strict key resolution with override", .timed(iterations: 1000, warmup: 100))
-//    func strictKeyResolution() {
-//        withDependencies {
-//            $0[StrictTestKey.self] = "perf-test"
-//        } operation: {
-//            for _ in 0..<100 {
-//                _ = Dependency<Never>.Context.current[StrictTestKey.self]
-//            }
-//        }
-//    }
-//
-//    @Test("Strict key liveValue access", .timed(iterations: 1000, warmup: 100))
-//    func strictKeyLiveValue() {
-//        for _ in 0..<100 {
-//            _ = StrictTestKey.liveValue
-//        }
-//    }
+    //    @Test("Strict key resolution with override", .timed(iterations: 1000, warmup: 100))
+    //    func strictKeyResolution() {
+    //        withDependencies {
+    //            $0[StrictTestKey.self] = "perf-test"
+    //        } operation: {
+    //            for _ in 0..<100 {
+    //                _ = Dependency<Never>.Context.current[StrictTestKey.self]
+    //            }
+    //        }
+    //    }
+    //
+    //    @Test("Strict key liveValue access", .timed(iterations: 1000, warmup: 100))
+    //    func strictKeyLiveValue() {
+    //        for _ in 0..<100 {
+    //            _ = StrictTestKey.liveValue
+    //        }
+    //    }
 }
 
 // MARK: - Test Support

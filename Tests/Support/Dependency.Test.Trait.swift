@@ -36,18 +36,22 @@ public struct __DependencyTestTrait: TestScoping, TestTrait, SuiteTrait {
         testCase: Testing.Test.Case?,
         performing function: @Sendable @concurrent () async throws -> Void
     ) async throws {
-        try await Witness.Context.with(mode: .test, { witnessValues in
-            if Self.isRoot {
-                witnessValues = Witness.Values()
+        try await Witness.Context.with(
+            mode: .test,
+            { witnessValues in
+                if Self.isRoot {
+                    witnessValues = Witness.Values()
+                }
+                var depValues = __DependencyValues(_witnessValues: witnessValues)
+                updateValues(&depValues)
+                witnessValues = depValues._witnessValues
+            },
+            operation: {
+                try await Self.$isRoot.withValue(false) {
+                    try await function()
+                }
             }
-            var depValues = __DependencyValues(_witnessValues: witnessValues)
-            updateValues(&depValues)
-            witnessValues = depValues._witnessValues
-        }) {
-            try await Self.$isRoot.withValue(false) {
-                try await function()
-            }
-        }
+        )
     }
 }
 

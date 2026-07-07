@@ -10,8 +10,8 @@
 //
 // ===----------------------------------------------------------------------===//
 
-public import Witnesses
 public import Dependency_Primitives
+public import Witnesses
 
 /// Hoisted type for ``Dependency.Values``.
 ///

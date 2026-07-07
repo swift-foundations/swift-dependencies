@@ -10,8 +10,8 @@
 //
 // ===----------------------------------------------------------------------===//
 
-import Testing
 public import Dependencies
+import Testing
 
 /// Test witness for basic dependency operations.
 @Witness

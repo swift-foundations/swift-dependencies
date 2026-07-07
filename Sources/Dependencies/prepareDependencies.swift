@@ -47,10 +47,11 @@ public import Witnesses
 /// - Returns: The result of the operation.
 /// - Throws: Rethrows any error from the operation.
 nonisolated(nonsending)
-public func prepareDependencies<T, E: Swift.Error>(
-    _ configure: (Witness.Preparation.Store) -> Void,
-    operation: nonisolated(nonsending) () async throws(E) -> T
-) async throws(E) -> T {
+    public func prepareDependencies<T, E: Swift.Error>(
+        _ configure: (Witness.Preparation.Store) -> Void,
+        operation: nonisolated(nonsending) () async throws(E) -> T
+    ) async throws(E) -> T
+{
     try await Witness.Preparation.with(configure, operation: operation)
 }
 

@@ -11,8 +11,9 @@
 // ===----------------------------------------------------------------------===//
 
 import Testing
-@testable import Dependencies
 import Witnesses
+
+@testable import Dependencies
 
 @Suite("prepareDependencies")
 struct PrepareDependenciesTests {
@@ -64,10 +65,13 @@ extension PrepareDependenciesTests.Test.Unit {
         prepareDependencies { store in
             // Verify store.set compiles and runs
             store.set(SimpleKey.self, value: "value1")
-            store.set(TestAPI.self, value: TestAPI(
-                fetch: { _ in "test" },
-                update: { _, _ in }
-            ))
+            store.set(
+                TestAPI.self,
+                value: TestAPI(
+                    fetch: { _ in "test" },
+                    update: { _, _ in }
+                )
+            )
         } operation: {
             // Operation completes
         }
@@ -156,35 +160,35 @@ extension PrepareDependenciesTests.Test.Integration {
 // MARK: - Performance Tests
 
 extension PrepareDependenciesTests.Test.Performance {
-//    @Test("Sync preparation overhead", .timed(iterations: 100, warmup: 10))
-//    func syncPreparationOverhead() {
-//        for _ in 0..<10 {
-//            _ = prepareDependencies { store in
-//                store.set(SimpleKey.self, value: "perf")
-//            } operation: {
-//                "result"
-//            }
-//        }
-//    }
-//
-//    @Test("Empty preparation", .timed(iterations: 1000, warmup: 100))
-//    func emptyPreparation() {
-//        for _ in 0..<100 {
-//            _ = prepareDependencies { _ in
-//            } operation: {
-//                // Empty
-//            }
-//        }
-//    }
-//
-//    @Test("Store set operations", .timed(iterations: 100, warmup: 10))
-//    func storeSetOperations() {
-//        for _ in 0..<10 {
-//            _ = prepareDependencies { store in
-//                store.set(SimpleKey.self, value: "v1")
-//            } operation: {
-//                // Empty
-//            }
-//        }
-//    }
+    //    @Test("Sync preparation overhead", .timed(iterations: 100, warmup: 10))
+    //    func syncPreparationOverhead() {
+    //        for _ in 0..<10 {
+    //            _ = prepareDependencies { store in
+    //                store.set(SimpleKey.self, value: "perf")
+    //            } operation: {
+    //                "result"
+    //            }
+    //        }
+    //    }
+    //
+    //    @Test("Empty preparation", .timed(iterations: 1000, warmup: 100))
+    //    func emptyPreparation() {
+    //        for _ in 0..<100 {
+    //            _ = prepareDependencies { _ in
+    //            } operation: {
+    //                // Empty
+    //            }
+    //        }
+    //    }
+    //
+    //    @Test("Store set operations", .timed(iterations: 100, warmup: 10))
+    //    func storeSetOperations() {
+    //        for _ in 0..<10 {
+    //            _ = prepareDependencies { store in
+    //                store.set(SimpleKey.self, value: "v1")
+    //            } operation: {
+    //                // Empty
+    //            }
+    //        }
+    //    }
 }

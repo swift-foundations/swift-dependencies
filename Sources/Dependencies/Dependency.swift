@@ -111,13 +111,13 @@ public struct Dependency<Value: Sendable>: Sendable {
     }
 }
 
-/// Internal accessor type for dependency resolution.
 // WHY: Category D — structural Sendable workaround.
 // WHY: The compiler does not derive structural Sendable for an enum holding
 // WHY: KeyPath<Root, Value> even when Root: Sendable and Value: Sendable.
 // WHY: No caller invariant to uphold — data is structurally safe.
 // WHEN TO REMOVE: When compiler gains structural Sendable inference through KeyPath generics.
 // TRACKING: unsafe-audit-findings.md Category D; SP-7.
+/// Internal accessor type for dependency resolution.
 @usableFromInline
 internal enum _Accessor<Value: Sendable>: @unchecked Sendable {
     case keyPath(KeyPath<__DependencyValues, Value>)

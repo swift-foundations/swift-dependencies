@@ -11,6 +11,7 @@
 // ===----------------------------------------------------------------------===//
 
 import Testing
+
 @testable import Dependencies
 
 @Suite("Isolation")
@@ -104,13 +105,13 @@ extension IsolationTests.Test.EdgeCase {
                 // eagerChild not overridden
             } operation: {
                 #expect(Dependency<Never>.Context.current.simple == "level-2")
-                #expect(Dependency<Never>.Context.current.eagerChild == 1) // Inherited
+                #expect(Dependency<Never>.Context.current.eagerChild == 1)  // Inherited
 
                 withDependencies {
                     $0.eagerChild = 3
                     // simple not overridden
                 } operation: {
-                    #expect(Dependency<Never>.Context.current.simple == "level-2") // Inherited
+                    #expect(Dependency<Never>.Context.current.simple == "level-2")  // Inherited
                     #expect(Dependency<Never>.Context.current.eagerChild == 3)
                 }
             }
@@ -229,36 +230,36 @@ extension IsolationTests.Test.Integration {
 // MARK: - Performance Tests
 
 extension IsolationTests.Test.Performance {
-//    @Test("Concurrent scope creation", .timed(iterations: 10, warmup: 2))
-//    func concurrentScopeCreation() async {
-//        await withTaskGroup(of: Void.self) { group in
-//            for _ in 0..<10 {
-//                group.addTask {
-//                    withDependencies {
-//                        $0.simple = "concurrent"
-//                    } operation: {
-//                        _ = Dependency<Never>.Context.current.simple
-//                    }
-//                }
-//            }
-//            await group.waitForAll()
-//        }
-//    }
-//
-//    @Test("Deep nesting performance", .timed(iterations: 100, warmup: 10))
-//    func deepNestingPerformance() {
-//        func nest(depth: Int) {
-//            if depth == 0 {
-//                _ = Dependency<Never>.Context.current.simple
-//                return
-//            }
-//            withDependencies {
-//                $0.simple = "depth-\(depth)"
-//            } operation: {
-//                nest(depth: depth - 1)
-//            }
-//        }
-//
-//        nest(depth: 10)
-//    }
+    //    @Test("Concurrent scope creation", .timed(iterations: 10, warmup: 2))
+    //    func concurrentScopeCreation() async {
+    //        await withTaskGroup(of: Void.self) { group in
+    //            for _ in 0..<10 {
+    //                group.addTask {
+    //                    withDependencies {
+    //                        $0.simple = "concurrent"
+    //                    } operation: {
+    //                        _ = Dependency<Never>.Context.current.simple
+    //                    }
+    //                }
+    //            }
+    //            await group.waitForAll()
+    //        }
+    //    }
+    //
+    //    @Test("Deep nesting performance", .timed(iterations: 100, warmup: 10))
+    //    func deepNestingPerformance() {
+    //        func nest(depth: Int) {
+    //            if depth == 0 {
+    //                _ = Dependency<Never>.Context.current.simple
+    //                return
+    //            }
+    //            withDependencies {
+    //                $0.simple = "depth-\(depth)"
+    //            } operation: {
+    //                nest(depth: depth - 1)
+    //            }
+    //        }
+    //
+    //        nest(depth: 10)
+    //    }
 }

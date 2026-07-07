@@ -11,6 +11,7 @@
 // ===----------------------------------------------------------------------===//
 
 import Testing
+
 @testable import Dependencies
 
 @Suite("withDependencies")
@@ -103,7 +104,8 @@ extension WithDependenciesTests.Test.EdgeCase {
 
     @Test
     func `Return value passes through`() throws {
-        let result = try withDependencies { _ in } operation: {
+        let result = try withDependencies { _ in
+        } operation: {
             42
         }
         #expect(result == 42)
@@ -170,51 +172,51 @@ extension WithDependenciesTests.Test.Integration {
 // MARK: - Performance Tests
 
 extension WithDependenciesTests.Test.Performance {
-//    @Test("Sync scope overhead", .timed(iterations: 1000, warmup: 100))
-//    func syncScopeOverhead() {
-//        for _ in 0..<100 {
-//            withDependencies { _ in
-//                // Empty modification
-//            } operation: {
-//                // Empty operation
-//            }
-//        }
-//    }
-//
-//    @Test("Sync scope with modification", .timed(iterations: 1000, warmup: 100))
-//    func syncScopeWithModification() {
-//        for _ in 0..<100 {
-//            withDependencies {
-//                $0[SimpleKey.self] = "modified"
-//            } operation: {
-//                _ = Dependency<Never>.Context.current[SimpleKey.self]
-//            }
-//        }
-//    }
-//
-//    @Test("Nested scopes", .timed(iterations: 100, warmup: 10))
-//    func nestedScopesPerformance() {
-//        for _ in 0..<10 {
-//            withDependencies {
-//                $0[SimpleKey.self] = "outer"
-//            } operation: {
-//                withDependencies {
-//                    $0[SimpleKey.self] = "inner"
-//                } operation: {
-//                    _ = Dependency<Never>.Context.current[SimpleKey.self]
-//                }
-//            }
-//        }
-//    }
-//
-//    @Test("Mode-aware scope", .timed(iterations: 1000, warmup: 100))
-//    func modeAwareScopePerformance() {
-//        for _ in 0..<100 {
-//            withDependencies(mode: .test) { _ in
-//                // Empty modification
-//            } operation: {
-//                _ = Dependency<Never>.Context.mode
-//            }
-//        }
-//    }
+    //    @Test("Sync scope overhead", .timed(iterations: 1000, warmup: 100))
+    //    func syncScopeOverhead() {
+    //        for _ in 0..<100 {
+    //            withDependencies { _ in
+    //                // Empty modification
+    //            } operation: {
+    //                // Empty operation
+    //            }
+    //        }
+    //    }
+    //
+    //    @Test("Sync scope with modification", .timed(iterations: 1000, warmup: 100))
+    //    func syncScopeWithModification() {
+    //        for _ in 0..<100 {
+    //            withDependencies {
+    //                $0[SimpleKey.self] = "modified"
+    //            } operation: {
+    //                _ = Dependency<Never>.Context.current[SimpleKey.self]
+    //            }
+    //        }
+    //    }
+    //
+    //    @Test("Nested scopes", .timed(iterations: 100, warmup: 10))
+    //    func nestedScopesPerformance() {
+    //        for _ in 0..<10 {
+    //            withDependencies {
+    //                $0[SimpleKey.self] = "outer"
+    //            } operation: {
+    //                withDependencies {
+    //                    $0[SimpleKey.self] = "inner"
+    //                } operation: {
+    //                    _ = Dependency<Never>.Context.current[SimpleKey.self]
+    //                }
+    //            }
+    //        }
+    //    }
+    //
+    //    @Test("Mode-aware scope", .timed(iterations: 1000, warmup: 100))
+    //    func modeAwareScopePerformance() {
+    //        for _ in 0..<100 {
+    //            withDependencies(mode: .test) { _ in
+    //                // Empty modification
+    //            } operation: {
+    //                _ = Dependency<Never>.Context.mode
+    //            }
+    //        }
+    //    }
 }
