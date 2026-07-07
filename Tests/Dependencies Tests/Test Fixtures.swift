@@ -45,7 +45,9 @@ extension Dependency.Values {
 }
 
 /// Simple non-witness key for basic testing.
-struct SimpleKey: Dependency.Key {
+struct SimpleKey: Dependency.Key {}
+
+extension SimpleKey {
     typealias Value = String
     static var liveValue: String { "live" }
     static var testValue: String { "test" }
@@ -63,7 +65,9 @@ extension Dependency.Values {
 // MARK: - Additional Test Keys
 
 /// Int key for testing
-enum IntKey: Dependency.Key {
+enum IntKey: Dependency.Key {}
+
+extension IntKey {
     static var liveValue: Int { -1 }
     static var testValue: Int { 42 }
 }
@@ -76,7 +80,9 @@ extension Dependency.Values {
 }
 
 /// String key for testing (distinct from SimpleKey)
-enum StringKey: Dependency.Key {
+enum StringKey: Dependency.Key {}
+
+extension StringKey {
     static var liveValue: String { "live-string" }
     static var testValue: String { "test-string" }
 }
@@ -89,7 +95,9 @@ extension Dependency.Values {
 }
 
 /// Eager child dependency - resolved at access time
-enum EagerChildKey: Dependency.Key {
+enum EagerChildKey: Dependency.Key {}
+
+extension EagerChildKey {
     static var liveValue: Int { 1729 }
     static var testValue: Int { 1729 }
 }
@@ -102,7 +110,9 @@ extension Dependency.Values {
 }
 
 /// Lazy child dependency - resolved when closure is called
-enum LazyChildKey: Dependency.Key {
+enum LazyChildKey: Dependency.Key {}
+
+extension LazyChildKey {
     static var liveValue: @Sendable () -> Int { { 1729 } }
     static var testValue: @Sendable () -> Int { { 1729 } }
 }
@@ -115,7 +125,9 @@ extension Dependency.Values {
 }
 
 /// Key with distinct values for each mode
-enum ModeAwareKey: Dependency.Key {
+enum ModeAwareKey: Dependency.Key {}
+
+extension ModeAwareKey {
     static var liveValue: String { "live-default" }
     static var testValue: String { "test-default" }
     static var previewValue: String { "preview-default" }
@@ -129,7 +141,9 @@ extension Dependency.Values {
 }
 
 /// Key with optional value
-enum OptionalKey: Dependency.Key {
+enum OptionalKey: Dependency.Key {}
+
+extension OptionalKey {
     static var liveValue: String? { "live-optional" }
     static var testValue: String? { nil }
 }
@@ -148,7 +162,9 @@ struct CountingClient: Sendable {
     init(_ increment: @escaping @Sendable () -> Int) {
         self._increment = increment
     }
+}
 
+extension CountingClient {
     func increment() -> Int {
         _increment()
     }
@@ -164,7 +180,9 @@ final class UnsafeCurrentValueContainer<Value>: @unchecked Sendable {
 }
 
 /// Counting key that tracks invocations
-enum CountingKey: Dependency.Key {
+enum CountingKey: Dependency.Key {}
+
+extension CountingKey {
     static var liveValue: CountingClient {
         let count = UnsafeCurrentValueContainer(0)
         return CountingClient {

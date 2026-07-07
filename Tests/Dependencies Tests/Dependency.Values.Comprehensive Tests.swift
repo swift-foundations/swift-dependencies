@@ -18,7 +18,7 @@ import Testing
 struct DependencyValuesComprehensiveTests {
     @Suite struct Test {
         @Suite struct Unit {}
-        @Suite struct EdgeCase {}
+        @Suite struct `Edge Case` {}
         @Suite struct Integration {}
         @Suite(.serialized) struct Performance {}
     }
@@ -81,7 +81,7 @@ extension DependencyValuesComprehensiveTests.Test.Unit {
 
 // MARK: - Edge Case Tests
 
-extension DependencyValuesComprehensiveTests.Test.EdgeCase {
+extension DependencyValuesComprehensiveTests.Test.`Edge Case` {
     @Test
     func `Empty modification preserves existing values`() {
         withDependencies {

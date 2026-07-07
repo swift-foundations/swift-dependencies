@@ -18,7 +18,7 @@ import Testing
 struct DependencyKeyStrictTests {
     @Suite struct Test {
         @Suite struct Unit {}
-        @Suite struct EdgeCase {}
+        @Suite struct `Edge Case` {}
         @Suite struct Integration {}
         @Suite(.serialized) struct Performance {}
     }
@@ -44,7 +44,7 @@ extension DependencyKeyStrictTests.Test.Unit {
 
 // MARK: - Edge Case Tests
 
-extension DependencyKeyStrictTests.Test.EdgeCase {
+extension DependencyKeyStrictTests.Test.`Edge Case` {
     @Test
     func `Strict key override works in test mode`() {
         withDependencies(mode: .test) {
@@ -137,13 +137,17 @@ extension DependencyKeyStrictTests.Test.Performance {
 // MARK: - Test Support
 
 /// A strict dependency key for testing
-enum StrictTestKey: Dependency<Never>.Key.Strict {
+enum StrictTestKey: Dependency<Never>.Key.Strict {}
+
+extension StrictTestKey {
     typealias Value = String
     static var liveValue: String { "strict-live" }
 }
 
 /// Another strict key with different value type
-enum AnotherStrictKey: Dependency<Never>.Key.Strict {
+enum AnotherStrictKey: Dependency<Never>.Key.Strict {}
+
+extension AnotherStrictKey {
     typealias Value = Int
     static var liveValue: Int { 0 }
 }

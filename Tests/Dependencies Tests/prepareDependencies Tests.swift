@@ -19,7 +19,7 @@ import Witnesses
 struct PrepareDependenciesTests {
     @Suite struct Test {
         @Suite struct Unit {}
-        @Suite struct EdgeCase {}
+        @Suite struct `Edge Case` {}
         @Suite struct Integration {}
         @Suite(.serialized) struct Performance {}
     }
@@ -82,7 +82,7 @@ extension PrepareDependenciesTests.Test.Unit {
 
 // MARK: - Edge Case Tests
 
-extension PrepareDependenciesTests.Test.EdgeCase {
+extension PrepareDependenciesTests.Test.`Edge Case` {
     @Test
     func `Empty preparation works`() {
         let result = prepareDependencies { _ in

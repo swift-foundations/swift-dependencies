@@ -40,25 +40,25 @@
     struct SingleDependencyOverrideTests {
 
         @Test("dependency trait overrides via KeyPath", .dependency(\.simple, "trait-override"))
-        func keyPathOverride() {
+        func `keyPathOverride`() {
             @Dependency(\.simple) var simple
             #expect(simple == "trait-override")
         }
 
         @Test("dependency trait overrides int value", .dependency(\.intValue, 999))
-        func intOverride() {
+        func `intOverride`() {
             @Dependency(\.intValue) var intValue
             #expect(intValue == 999)
         }
 
         @Test("dependency trait with nil optional", .dependency(\.optionalValue, nil))
-        func nilOptionalOverride() {
+        func `nilOptionalOverride`() {
             @Dependency(\.optionalValue) var optionalValue
             #expect(optionalValue == nil)
         }
 
         @Test("dependency trait with some optional", .dependency(\.optionalValue, "some-value"))
-        func someOptionalOverride() {
+        func `someOptionalOverride`() {
             @Dependency(\.optionalValue) var optionalValue
             #expect(optionalValue == "some-value")
         }
@@ -77,7 +77,7 @@
                 $0.stringValue = "multi-2"
             }
         )
-        func multipleOverrides() {
+        func `multipleOverrides`() {
             @Dependency(\.simple) var simple
             @Dependency(\.intValue) var intValue
             @Dependency(\.stringValue) var stringValue
@@ -96,7 +96,7 @@
                 )
             }
         )
-        func witnessOverride() async throws {
+        func `witnessOverride`() async throws {
             @Dependency(\.testAPI) var api
             let result = try await api.fetch(id: 1)
             #expect(result == "custom-fetch")
@@ -118,7 +118,7 @@
             }
 
             @Test("can add additional override", .dependency(\.intValue, 123))
-            func additionalOverride() {
+            func `additionalOverride`() {
                 @Dependency(\.simple) var simple
                 @Dependency(\.intValue) var intValue
                 #expect(simple == "outer")
@@ -126,7 +126,7 @@
             }
 
             @Test("can replace outer override", .dependency(\.simple, "inner"))
-            func replacesOuter() {
+            func `replacesOuter`() {
                 @Dependency(\.simple) var simple
                 #expect(simple == "inner")
             }
@@ -167,7 +167,7 @@
         }
 
         @Test("override takes precedence over testValue", .dependency(\.modeAware, "overridden"))
-        func overrideTakesPrecedence() {
+        func `overrideTakesPrecedence`() {
             @Dependency(\.modeAware) var modeAware
             #expect(modeAware == "overridden")
         }

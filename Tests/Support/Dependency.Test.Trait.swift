@@ -23,7 +23,9 @@ public import Witnesses
 public struct __DependencyTestTrait: TestScoping, TestTrait, SuiteTrait {
     /// Closure that modifies dependency values for the test scope.
     let updateValues: @Sendable (inout __DependencyValues) -> Void
+}
 
+extension __DependencyTestTrait {
     /// Tracks whether this is the root trait in the hierarchy.
     @TaskLocal static var isRoot = true
 

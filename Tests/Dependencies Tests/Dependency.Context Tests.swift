@@ -17,7 +17,7 @@ import Testing
 extension __DependencyContext {
     @Suite struct Test {
         @Suite struct Unit {}
-        @Suite struct EdgeCase {}
+        @Suite struct `Edge Case` {}
         @Suite struct Integration {}
         @Suite(.serialized) struct Performance {}
     }
@@ -51,7 +51,7 @@ extension __DependencyContext.Test.Unit {
 
 // MARK: - Edge Case Tests
 
-extension __DependencyContext.Test.EdgeCase {
+extension __DependencyContext.Test.`Edge Case` {
     @Test
     func `Context tracks mode changes through withDependencies`() throws {
         // Start in live mode

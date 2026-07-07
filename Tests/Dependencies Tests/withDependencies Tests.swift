@@ -18,7 +18,7 @@ import Testing
 struct WithDependenciesTests {
     @Suite struct Test {
         @Suite struct Unit {}
-        @Suite struct EdgeCase {}
+        @Suite struct `Edge Case` {}
         @Suite struct Integration {}
         @Suite(.serialized) struct Performance {}
     }
@@ -69,7 +69,7 @@ extension WithDependenciesTests.Test.Unit {
 
 // MARK: - Edge Case Tests
 
-extension WithDependenciesTests.Test.EdgeCase {
+extension WithDependenciesTests.Test.`Edge Case` {
     @Test
     func `Nested scopes work correctly`() throws {
         try withDependencies {

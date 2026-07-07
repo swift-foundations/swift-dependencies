@@ -18,7 +18,7 @@ import Testing
 struct DependencyKeyTests {
     @Suite struct Test {
         @Suite struct Unit {}
-        @Suite struct EdgeCase {}
+        @Suite struct `Edge Case` {}
         @Suite struct Integration {}
         @Suite(.serialized) struct Performance {}
     }
@@ -59,7 +59,7 @@ extension DependencyKeyTests.Test.Unit {
 
 // MARK: - Edge Case Tests
 
-extension DependencyKeyTests.Test.EdgeCase {
+extension DependencyKeyTests.Test.`Edge Case` {
     @Test
     func `Key with complex value type`() async throws {
         try await withDependencies {
@@ -156,7 +156,9 @@ extension DependencyKeyTests.Test.Performance {
 // MARK: - Test Support
 
 /// Key that only defines testValue (no preview/live overrides)
-enum TestOnlyKey: Dependency<Never>.Key {
+enum TestOnlyKey: Dependency<Never>.Key {}
+
+extension TestOnlyKey {
     static var liveValue: String { "live-fallback" }
     static var testValue: String { "test-only" }
 }

@@ -18,7 +18,7 @@ import Testing
 struct DependencyPropertyWrapperTests {
     @Suite struct Test {
         @Suite struct Unit {}
-        @Suite struct EdgeCase {}
+        @Suite struct `Edge Case` {}
         @Suite struct Integration {}
         @Suite(.serialized) struct Performance {}
     }
@@ -28,7 +28,9 @@ struct DependencyPropertyWrapperTests {
 struct DependencyConsumer: Sendable {
     @Dependency(\.simple) var simple
     @Dependency(\.testAPI) var testAPI
+}
 
+extension DependencyConsumer {
     func getSimple() -> String {
         simple
     }
@@ -63,7 +65,7 @@ extension DependencyPropertyWrapperTests.Test.Unit {
 
 // MARK: - Edge Case Tests
 
-extension DependencyPropertyWrapperTests.Test.EdgeCase {
+extension DependencyPropertyWrapperTests.Test.`Edge Case` {
     @Test
     func `Property wrapper reflects scope changes`() throws {
         let consumer = DependencyConsumer()

@@ -26,7 +26,9 @@
 /// @Test(.dependency(\.clock, Clock.`Any`(Clock.Test())))
 /// func testTimedFeature() async { ... }
 /// ```
-private enum ClockKey: Dependency.Key {
+private enum ClockKey: Dependency.Key {}
+
+extension ClockKey {
     static var liveValue: Clock.`Any`<Duration> {
         Clock.`Any`(Clock.Continuous())
     }

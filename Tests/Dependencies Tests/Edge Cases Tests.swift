@@ -18,7 +18,7 @@ import Testing
 struct EdgeCasesTests {
     @Suite struct Test {
         @Suite struct Unit {}
-        @Suite struct EdgeCase {}
+        @Suite struct `Edge Case` {}
         @Suite struct Integration {}
         @Suite(.serialized) struct Performance {}
     }
@@ -83,7 +83,7 @@ extension EdgeCasesTests.Test.Unit {
 
 // MARK: - Edge Case Tests
 
-extension EdgeCasesTests.Test.EdgeCase {
+extension EdgeCasesTests.Test.`Edge Case` {
     @Test
     func `Deeply nested model hierarchy`() {
         class NestedModel: @unchecked Sendable {

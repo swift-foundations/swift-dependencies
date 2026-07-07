@@ -18,7 +18,7 @@ import Testing
 struct DependencyContinuationTests {
     @Suite struct Test {
         @Suite struct Unit {}
-        @Suite struct EdgeCase {}
+        @Suite struct `Edge Case` {}
         @Suite struct Integration {}
         @Suite(.serialized) struct Performance {}
     }
@@ -48,7 +48,7 @@ extension DependencyContinuationTests.Test.Unit {
 
 // MARK: - Edge Case Tests
 
-extension DependencyContinuationTests.Test.EdgeCase {
+extension DependencyContinuationTests.Test.`Edge Case` {
     @Test
     func `Continuation captures current dependencies`() {
         var capturedValue: String?

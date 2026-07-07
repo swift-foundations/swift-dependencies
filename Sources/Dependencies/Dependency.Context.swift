@@ -17,7 +17,9 @@ public import Witnesses
 ///
 /// - Note: This type is at module level due to Swift's limitation on referencing
 ///   nested types in generic contexts. Use ``Dependency.Context`` in all API usage.
-public enum __DependencyContext: Sendable {
+public enum __DependencyContext: Sendable {}
+
+extension __DependencyContext {
     /// Typealias to ``Witness.Context.Mode``.
     public typealias Mode = Witness.Context.Mode
 

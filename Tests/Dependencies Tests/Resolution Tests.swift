@@ -15,10 +15,10 @@ import Testing
 @testable import Dependencies
 
 @Suite("Resolution")
-struct ResolutionTests {
+struct `Resolution` {
     @Suite struct Test {
         @Suite struct Unit {}
-        @Suite struct EdgeCase {}
+        @Suite struct `Edge Case` {}
         @Suite struct Integration {}
         @Suite(.serialized) struct Performance {}
     }
@@ -26,7 +26,7 @@ struct ResolutionTests {
 
 // MARK: - Unit Tests
 
-extension ResolutionTests.Test.Unit {
+extension `Resolution`.Test.Unit {
     @Test
     func `Eager dependency resolution`() {
         @Dependency(\.eagerChild) var eagerChild: Int
@@ -52,7 +52,7 @@ extension ResolutionTests.Test.Unit {
 
 // MARK: - Edge Case Tests
 
-extension ResolutionTests.Test.EdgeCase {
+extension `Resolution`.Test.`Edge Case` {
     @Test
     func `Eager dependency with override`() {
         @Dependency(\.eagerChild) var eagerChild: Int
@@ -114,7 +114,7 @@ extension ResolutionTests.Test.EdgeCase {
 
 // MARK: - Integration Tests
 
-extension ResolutionTests.Test.Integration {
+extension `Resolution`.Test.Integration {
     @Test
     func `Multiple dependencies resolved together`() {
         withDependencies {
@@ -166,7 +166,7 @@ extension ResolutionTests.Test.Integration {
 
 // MARK: - Performance Tests
 
-extension ResolutionTests.Test.Performance {
+extension `Resolution`.Test.Performance {
     //    @Test("Nested scope resolution", .timed(iterations: 100, warmup: 10))
     //    func nestedScopeResolution() {
     //        for _ in 0..<10 {

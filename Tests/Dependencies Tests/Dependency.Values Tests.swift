@@ -17,7 +17,7 @@ import Testing
 extension __DependencyValues {
     @Suite struct Test {
         @Suite struct Unit {}
-        @Suite struct EdgeCase {}
+        @Suite struct `Edge Case` {}
         @Suite struct Integration {}
         @Suite(.serialized) struct Performance {}
     }
@@ -58,7 +58,7 @@ extension __DependencyValues.Test.Unit {
 
 // MARK: - Edge Case Tests
 
-extension __DependencyValues.Test.EdgeCase {
+extension __DependencyValues.Test.`Edge Case` {
     @Test
     func `KeyPath-based access works`() throws {
         try withDependencies {

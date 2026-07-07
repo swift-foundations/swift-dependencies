@@ -15,10 +15,10 @@ import Testing
 @testable import Dependencies
 
 @Suite("Isolation")
-struct IsolationTests {
+struct `Isolation` {
     @Suite struct Test {
         @Suite struct Unit {}
-        @Suite struct EdgeCase {}
+        @Suite struct `Edge Case` {}
         @Suite struct Integration {}
         @Suite(.serialized) struct Performance {}
     }
@@ -26,7 +26,7 @@ struct IsolationTests {
 
 // MARK: - Unit Tests
 
-extension IsolationTests.Test.Unit {
+extension `Isolation`.Test.Unit {
     @Test
     func `Each test starts with clean context`() {
         @Dependency(\.counting) var counting
@@ -66,7 +66,7 @@ extension IsolationTests.Test.Unit {
 
 // MARK: - Edge Case Tests
 
-extension IsolationTests.Test.EdgeCase {
+extension `Isolation`.Test.`Edge Case` {
     @Test
     func `Concurrent scopes are isolated`() async {
         let iterations = 10
@@ -174,7 +174,7 @@ extension IsolationTests.Test.EdgeCase {
 
 // MARK: - Integration Tests
 
-extension IsolationTests.Test.Integration {
+extension `Isolation`.Test.Integration {
     @Test
     func `Task isolation with TaskGroup`() async {
         await withDependencies {
@@ -229,7 +229,7 @@ extension IsolationTests.Test.Integration {
 
 // MARK: - Performance Tests
 
-extension IsolationTests.Test.Performance {
+extension `Isolation`.Test.Performance {
     //    @Test("Concurrent scope creation", .timed(iterations: 10, warmup: 2))
     //    func concurrentScopeCreation() async {
     //        await withTaskGroup(of: Void.self) { group in
