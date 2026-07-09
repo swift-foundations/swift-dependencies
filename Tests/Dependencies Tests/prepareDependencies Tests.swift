@@ -15,8 +15,8 @@ import Witnesses
 
 @testable import Dependencies
 
-@Suite("prepareDependencies")
-struct PrepareDependenciesTests {
+@Suite
+struct `prepareDependencies Tests` {
     @Suite struct Test {
         @Suite struct Unit {}
         @Suite struct `Edge Case` {}
@@ -27,7 +27,7 @@ struct PrepareDependenciesTests {
 
 // MARK: - Unit Tests
 
-extension PrepareDependenciesTests.Test.Unit {
+extension `prepareDependencies Tests`.Test.Unit {
     @Test
     func `Sync preparation runs without error`() {
         let result = prepareDependencies { store in
@@ -82,7 +82,7 @@ extension PrepareDependenciesTests.Test.Unit {
 
 // MARK: - Edge Case Tests
 
-extension PrepareDependenciesTests.Test.`Edge Case` {
+extension `prepareDependencies Tests`.Test.`Edge Case` {
     @Test
     func `Empty preparation works`() {
         let result = prepareDependencies { _ in
@@ -112,7 +112,7 @@ extension PrepareDependenciesTests.Test.`Edge Case` {
 
 // MARK: - Integration Tests
 
-extension PrepareDependenciesTests.Test.Integration {
+extension `prepareDependencies Tests`.Test.Integration {
     @Test
     func `withDependencies works inside prepareDependencies`() {
         prepareDependencies { _ in
@@ -159,7 +159,7 @@ extension PrepareDependenciesTests.Test.Integration {
 
 // MARK: - Performance Tests
 
-extension PrepareDependenciesTests.Test.Performance {
+extension `prepareDependencies Tests`.Test.Performance {
     //    @Test("Sync preparation overhead", .timed(iterations: 100, warmup: 10))
     //    func syncPreparationOverhead() {
     //        for _ in 0..<10 {

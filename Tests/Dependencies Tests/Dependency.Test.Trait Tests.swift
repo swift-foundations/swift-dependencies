@@ -17,8 +17,8 @@
 
     // MARK: - Basic Trait Tests
 
-    @Suite("Dependency Test Traits", .dependencies)
-    struct DependencyTraitTests {
+    @Suite(.dependencies)
+    struct `Dependency Test Traits` {
 
         @Test
         func `dependencies trait sets test mode`() {
@@ -36,8 +36,8 @@
 
     // MARK: - Single Dependency Override Tests
 
-    @Suite("Single Dependency Override", .dependencies)
-    struct SingleDependencyOverrideTests {
+    @Suite(.dependencies)
+    struct `Single Dependency Override` {
 
         @Test("dependency trait overrides via KeyPath", .dependency(\.simple, "trait-override"))
         func `keyPathOverride`() {
@@ -66,8 +66,8 @@
 
     // MARK: - Multiple Dependencies Override Tests
 
-    @Suite("Multiple Dependencies Override", .dependencies)
-    struct MultipleDependenciesOverrideTests {
+    @Suite(.dependencies)
+    struct `Multiple Dependencies Override` {
 
         @Test(
             "dependencies closure overrides multiple values",
@@ -105,11 +105,11 @@
 
     // MARK: - Nested Suite Tests
 
-    @Suite("Nested Suite Traits", .dependencies)
-    struct NestedSuiteTests {
+    @Suite(.dependencies)
+    struct `Nested Suite Traits` {
 
-        @Suite("Inner Suite with Override", .dependency(\.simple, "outer"))
-        struct InnerSuite {
+        @Suite(.dependency(\.simple, "outer"))
+        struct `Inner Suite with Override` {
 
             @Test
             func `inherits outer override`() {
@@ -135,8 +135,8 @@
 
     // MARK: - Isolation Tests
 
-    @Suite("Trait Isolation", .dependencies)
-    struct TraitIsolationTests {
+    @Suite(.dependencies)
+    struct `Trait Isolation` {
 
         @Test
         func `test 1 - counting starts fresh`() {
@@ -157,8 +157,8 @@
 
     // MARK: - Mode Resolution Tests
 
-    @Suite("Mode Resolution with Traits", .dependencies)
-    struct ModeResolutionTests {
+    @Suite(.dependencies)
+    struct `Mode Resolution with Traits` {
 
         @Test
         func `uses testValue by default in trait scope`() {

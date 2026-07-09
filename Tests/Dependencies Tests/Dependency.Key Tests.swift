@@ -14,8 +14,8 @@ import Testing
 
 @testable import Dependencies
 
-@Suite("Dependency.Key")
-struct DependencyKeyTests {
+@Suite
+struct `Dependency.Key Tests` {
     @Suite struct Test {
         @Suite struct Unit {}
         @Suite struct `Edge Case` {}
@@ -26,7 +26,7 @@ struct DependencyKeyTests {
 
 // MARK: - Unit Tests
 
-extension DependencyKeyTests.Test.Unit {
+extension `Dependency.Key Tests`.Test.Unit {
     @Test
     func `Key is typealias for Witness.Key`() {
         // Verify the typealias works by using a conforming type
@@ -59,7 +59,7 @@ extension DependencyKeyTests.Test.Unit {
 
 // MARK: - Edge Case Tests
 
-extension DependencyKeyTests.Test.`Edge Case` {
+extension `Dependency.Key Tests`.Test.`Edge Case` {
     @Test
     func `Key with complex value type`() async throws {
         try await withDependencies {
@@ -97,7 +97,7 @@ extension DependencyKeyTests.Test.`Edge Case` {
 
 // MARK: - Integration Tests
 
-extension DependencyKeyTests.Test.Integration {
+extension `Dependency.Key Tests`.Test.Integration {
     @Test
     func `Key resolution respects context mode`() throws {
         // In test mode, SimpleKey returns "test"
@@ -128,7 +128,7 @@ extension DependencyKeyTests.Test.Integration {
 
 // MARK: - Performance Tests
 
-extension DependencyKeyTests.Test.Performance {
+extension `Dependency.Key Tests`.Test.Performance {
     //    @Test("Key resolution", .timed(iterations: 1000, warmup: 100))
     //    func keyResolution() {
     //        for _ in 0..<100 {

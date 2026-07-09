@@ -14,8 +14,8 @@ import Testing
 
 @testable import Dependencies
 
-@Suite("withDependencies")
-struct WithDependenciesTests {
+@Suite
+struct `withDependencies Tests` {
     @Suite struct Test {
         @Suite struct Unit {}
         @Suite struct `Edge Case` {}
@@ -26,7 +26,7 @@ struct WithDependenciesTests {
 
 // MARK: - Unit Tests
 
-extension WithDependenciesTests.Test.Unit {
+extension `withDependencies Tests`.Test.Unit {
     @Test
     func `Basic override works`() throws {
         let result = try withDependencies {
@@ -69,7 +69,7 @@ extension WithDependenciesTests.Test.Unit {
 
 // MARK: - Edge Case Tests
 
-extension WithDependenciesTests.Test.`Edge Case` {
+extension `withDependencies Tests`.Test.`Edge Case` {
     @Test
     func `Nested scopes work correctly`() throws {
         try withDependencies {
@@ -114,7 +114,7 @@ extension WithDependenciesTests.Test.`Edge Case` {
 
 // MARK: - Integration Tests
 
-extension WithDependenciesTests.Test.Integration {
+extension `withDependencies Tests`.Test.Integration {
     @Test
     func `Async variant works`() async throws {
         let result = try await withDependencies {
@@ -171,7 +171,7 @@ extension WithDependenciesTests.Test.Integration {
 
 // MARK: - Performance Tests
 
-extension WithDependenciesTests.Test.Performance {
+extension `withDependencies Tests`.Test.Performance {
     //    @Test("Sync scope overhead", .timed(iterations: 1000, warmup: 100))
     //    func syncScopeOverhead() {
     //        for _ in 0..<100 {

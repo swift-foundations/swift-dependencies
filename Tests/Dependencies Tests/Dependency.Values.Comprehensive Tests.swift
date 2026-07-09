@@ -14,9 +14,8 @@ import Testing
 
 @testable import Dependencies
 
-@Suite("Dependency.Values.Comprehensive")
-struct DependencyValuesComprehensiveTests {
-    @Suite struct Test {
+extension __DependencyValues.Test {
+    @Suite("Dependency.Values.Comprehensive") struct Comprehensive {
         @Suite struct Unit {}
         @Suite struct `Edge Case` {}
         @Suite struct Integration {}
@@ -26,7 +25,7 @@ struct DependencyValuesComprehensiveTests {
 
 // MARK: - Unit Tests
 
-extension DependencyValuesComprehensiveTests.Test.Unit {
+extension __DependencyValues.Test.Comprehensive.Unit {
     @Test
     func `Values container stores and retrieves values`() {
         withDependencies {
@@ -81,7 +80,7 @@ extension DependencyValuesComprehensiveTests.Test.Unit {
 
 // MARK: - Edge Case Tests
 
-extension DependencyValuesComprehensiveTests.Test.`Edge Case` {
+extension __DependencyValues.Test.Comprehensive.`Edge Case` {
     @Test
     func `Empty modification preserves existing values`() {
         withDependencies {
@@ -200,7 +199,7 @@ extension DependencyValuesComprehensiveTests.Test.`Edge Case` {
 
 // MARK: - Integration Tests
 
-extension DependencyValuesComprehensiveTests.Test.Integration {
+extension __DependencyValues.Test.Comprehensive.Integration {
     @Test
     func `withDependencies returns operation result`() {
         let result = withDependencies {
@@ -292,7 +291,7 @@ extension DependencyValuesComprehensiveTests.Test.Integration {
 
 // MARK: - Performance Tests
 
-extension DependencyValuesComprehensiveTests.Test.Performance {
+extension __DependencyValues.Test.Comprehensive.Performance {
     //    @Test("Values container access", .timed(iterations: 1000, warmup: 100))
     //    func valuesContainerAccess() {
     //        var values = Dependency<Never>.Values()

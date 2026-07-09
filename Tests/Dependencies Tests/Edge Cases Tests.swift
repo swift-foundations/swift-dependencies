@@ -14,8 +14,8 @@ import Testing
 
 @testable import Dependencies
 
-@Suite("Edge Cases")
-struct EdgeCasesTests {
+@Suite
+struct `Edge Cases` {
     @Suite struct Test {
         @Suite struct Unit {}
         @Suite struct `Edge Case` {}
@@ -26,7 +26,7 @@ struct EdgeCasesTests {
 
 // MARK: - Unit Tests
 
-extension EdgeCasesTests.Test.Unit {
+extension `Edge Cases`.Test.Unit {
     @Test
     func `Dependency with type-based subscript access`() {
         struct MyDependency: Dependency.Key {
@@ -83,7 +83,7 @@ extension EdgeCasesTests.Test.Unit {
 
 // MARK: - Edge Case Tests
 
-extension EdgeCasesTests.Test.`Edge Case` {
+extension `Edge Cases`.Test.`Edge Case` {
     @Test
     func `Deeply nested model hierarchy`() {
         class NestedModel: @unchecked Sendable {
@@ -188,7 +188,7 @@ extension EdgeCasesTests.Test.`Edge Case` {
 
 // MARK: - Integration Tests
 
-extension EdgeCasesTests.Test.Integration {
+extension `Edge Cases`.Test.Integration {
     @Test
     func `Actor with dependencies`() async {
         actor DependentActor {
@@ -281,7 +281,7 @@ extension EdgeCasesTests.Test.Integration {
 
 // MARK: - Performance Tests
 
-extension EdgeCasesTests.Test.Performance {
+extension `Edge Cases`.Test.Performance {
     //    @Test("Repeated scope creation", .timed(iterations: 100, warmup: 10))
     //    func repeatedScopeCreation() {
     //        for _ in 0..<50 {

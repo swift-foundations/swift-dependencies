@@ -14,8 +14,8 @@ import Testing
 
 @testable import Dependencies
 
-@Suite("@Dependency Property Wrapper")
-struct DependencyPropertyWrapperTests {
+@Suite
+struct `Dependency Tests` {
     @Suite struct Test {
         @Suite struct Unit {}
         @Suite struct `Edge Case` {}
@@ -42,7 +42,7 @@ extension DependencyConsumer {
 
 // MARK: - Unit Tests
 
-extension DependencyPropertyWrapperTests.Test.Unit {
+extension `Dependency Tests`.Test.Unit {
     @Test
     func `Property wrapper accesses current context value`() throws {
         let consumer = DependencyConsumer()
@@ -65,7 +65,7 @@ extension DependencyPropertyWrapperTests.Test.Unit {
 
 // MARK: - Edge Case Tests
 
-extension DependencyPropertyWrapperTests.Test.`Edge Case` {
+extension `Dependency Tests`.Test.`Edge Case` {
     @Test
     func `Property wrapper reflects scope changes`() throws {
         let consumer = DependencyConsumer()
@@ -104,7 +104,7 @@ extension DependencyPropertyWrapperTests.Test.`Edge Case` {
 
 // MARK: - Integration Tests
 
-extension DependencyPropertyWrapperTests.Test.Integration {
+extension `Dependency Tests`.Test.Integration {
     @Test
     func `Property wrapper works with nested scopes`() throws {
         let consumer = DependencyConsumer()
@@ -148,7 +148,7 @@ extension DependencyPropertyWrapperTests.Test.Integration {
 
 // MARK: - Performance Tests
 
-extension DependencyPropertyWrapperTests.Test.Performance {
+extension `Dependency Tests`.Test.Performance {
     //    @Test("Property wrapper access", .timed(iterations: 1000, warmup: 100))
     //    func propertyWrapperAccess() {
     //        let consumer = DependencyConsumer()

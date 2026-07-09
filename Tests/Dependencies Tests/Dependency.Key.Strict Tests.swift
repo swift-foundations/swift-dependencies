@@ -14,8 +14,8 @@ import Testing
 
 @testable import Dependencies
 
-@Suite("Dependency.Key.Strict")
-struct DependencyKeyStrictTests {
+@Suite
+struct `Dependency.Key.Strict Tests` {
     @Suite struct Test {
         @Suite struct Unit {}
         @Suite struct `Edge Case` {}
@@ -26,7 +26,7 @@ struct DependencyKeyStrictTests {
 
 // MARK: - Unit Tests
 
-extension DependencyKeyStrictTests.Test.Unit {
+extension `Dependency.Key.Strict Tests`.Test.Unit {
     @Test
     func `Strict key conforms to Witness.Key`() {
         // Verify StrictTestKey conforms to the protocol hierarchy
@@ -44,7 +44,7 @@ extension DependencyKeyStrictTests.Test.Unit {
 
 // MARK: - Edge Case Tests
 
-extension DependencyKeyStrictTests.Test.`Edge Case` {
+extension `Dependency.Key.Strict Tests`.Test.`Edge Case` {
     @Test
     func `Strict key override works in test mode`() {
         withDependencies(mode: .test) {
@@ -78,7 +78,7 @@ extension DependencyKeyStrictTests.Test.`Edge Case` {
 
 // MARK: - Integration Tests
 
-extension DependencyKeyStrictTests.Test.Integration {
+extension `Dependency.Key.Strict Tests`.Test.Integration {
     @Test
     func `Strict key with property wrapper`() {
         struct Consumer: Sendable {
@@ -114,7 +114,7 @@ extension DependencyKeyStrictTests.Test.Integration {
 
 // MARK: - Performance Tests
 
-extension DependencyKeyStrictTests.Test.Performance {
+extension `Dependency.Key.Strict Tests`.Test.Performance {
     //    @Test("Strict key resolution with override", .timed(iterations: 1000, warmup: 100))
     //    func strictKeyResolution() {
     //        withDependencies {

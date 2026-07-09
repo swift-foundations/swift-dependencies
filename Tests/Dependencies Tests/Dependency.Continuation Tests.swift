@@ -14,9 +14,8 @@ import Testing
 
 @testable import Dependencies
 
-@Suite("Dependency.Continuation")
-struct DependencyContinuationTests {
-    @Suite struct Test {
+extension __DependencyContext.Test {
+    @Suite("Dependency.Continuation") struct Continuation {
         @Suite struct Unit {}
         @Suite struct `Edge Case` {}
         @Suite struct Integration {}
@@ -26,7 +25,7 @@ struct DependencyContinuationTests {
 
 // MARK: - Unit Tests
 
-extension DependencyContinuationTests.Test.Unit {
+extension __DependencyContext.Test.Continuation.Unit {
     @Test
     func `Continuation is typealias for Witness.Context.Escaped`() {
         // This test verifies the typealias compiles correctly
@@ -48,7 +47,7 @@ extension DependencyContinuationTests.Test.Unit {
 
 // MARK: - Edge Case Tests
 
-extension DependencyContinuationTests.Test.`Edge Case` {
+extension __DependencyContext.Test.Continuation.`Edge Case` {
     @Test
     func `Continuation captures current dependencies`() {
         var capturedValue: String?
@@ -126,7 +125,7 @@ extension DependencyContinuationTests.Test.`Edge Case` {
 
 // MARK: - Integration Tests
 
-extension DependencyContinuationTests.Test.Integration {
+extension __DependencyContext.Test.Continuation.Integration {
     @Test
     func `Continuation with async work`() async {
         var savedContinuation: Dependency<Never>.Continuation?
@@ -205,7 +204,7 @@ extension DependencyContinuationTests.Test.Integration {
 
 // MARK: - Performance Tests
 
-extension DependencyContinuationTests.Test.Performance {
+extension __DependencyContext.Test.Continuation.Performance {
     //    @Test("Continuation creation", .timed(iterations: 1000, warmup: 100))
     //    func continuationCreation() {
     //        for _ in 0..<100 {
