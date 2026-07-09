@@ -20,7 +20,6 @@ struct `Dependency.Key Tests` {
         @Suite struct Unit {}
         @Suite struct `Edge Case` {}
         @Suite struct Integration {}
-        @Suite(.serialized) struct Performance {}
     }
 }
 
@@ -124,33 +123,6 @@ extension `Dependency.Key Tests`.Test.Integration {
             #expect(value == "explicit-override")
         }
     }
-}
-
-// MARK: - Performance Tests
-
-extension `Dependency.Key Tests`.Test.Performance {
-    //    @Test("Key resolution", .timed(iterations: 1000, warmup: 100))
-    //    func keyResolution() {
-    //        for _ in 0..<100 {
-    //            _ = SimpleKey.liveValue
-    //        }
-    //    }
-    //
-    //    @Test("Key subscript get", .timed(iterations: 1000, warmup: 100))
-    //    func keySubscriptGet() {
-    //        let values = Dependency<Never>.Context.current
-    //        for _ in 0..<100 {
-    //            _ = values[SimpleKey.self]
-    //        }
-    //    }
-    //
-    //    @Test("Key subscript set", .timed(iterations: 1000, warmup: 100))
-    //    func keySubscriptSet() {
-    //        var values = Dependency<Never>.Values()
-    //        for i in 0..<100 {
-    //            values[SimpleKey.self] = "value-\(i)"
-    //        }
-    //    }
 }
 
 // MARK: - Test Support

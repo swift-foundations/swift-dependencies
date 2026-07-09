@@ -19,7 +19,6 @@ extension __DependencyContext.Test {
         @Suite struct Unit {}
         @Suite struct `Edge Case` {}
         @Suite struct Integration {}
-        @Suite(.serialized) struct Performance {}
     }
 }
 
@@ -200,36 +199,4 @@ extension __DependencyContext.Test.Continuation.Integration {
         #expect(outerValue == "outer")
         #expect(innerValue == "inner")
     }
-}
-
-// MARK: - Performance Tests
-
-extension __DependencyContext.Test.Continuation.Performance {
-    //    @Test("Continuation creation", .timed(iterations: 1000, warmup: 100))
-    //    func continuationCreation() {
-    //        for _ in 0..<100 {
-    //            Dependency<Never>.Context.withEscaped { _ in
-    //                // Just create the continuation
-    //            }
-    //        }
-    //    }
-    //
-    //    @Test("Continuation yield", .timed(iterations: 1000, warmup: 100))
-    //    func continuationYield() {
-    //        var savedContinuation: Dependency<Never>.Continuation?
-    //
-    //        withDependencies {
-    //            $0[SimpleKey.self] = "perf"
-    //        } operation: {
-    //            Dependency<Never>.Context.withEscaped { cont in
-    //                savedContinuation = cont
-    //            }
-    //        }
-    //
-    //        for _ in 0..<100 {
-    //            savedContinuation?.yield {
-    //                _ = Dependency<Never>.Context.current[SimpleKey.self]
-    //            }
-    //        }
-    //    }
 }
