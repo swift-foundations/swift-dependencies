@@ -63,6 +63,25 @@ extension __DependencyValues {
 }
 
 extension __DependencyValues {
+    /// Accesses the value for a test-only dependency key.
+    ///
+    /// Test-only keys (per ``Dependency/Key/Test``) provide only `testValue`
+    /// without a `liveValue`. The getter resolves through the current witness
+    /// context; the setter stores an explicit override.
+    ///
+    /// - Note: When `K` also conforms to `Witness.Key`, the more specific
+    ///   `Witness.Key` subscript is selected by overload resolution.
+    ///
+    /// - Parameter key: The test key type identifying the dependency.
+    /// - Returns: The value for the key.
+    @inlinable
+    public subscript<K: Witness.Key.Test>(key: K.Type) -> K.Value where K.Value: Copyable {
+        get { Witness.Context[key] }
+        set { _witnessValues[key] = newValue }
+    }
+}
+
+extension __DependencyValues {
     /// Accesses the value for an L1-only dependency key.
     ///
     /// **Get**: Reads directly from the L1 values struct.
