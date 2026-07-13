@@ -84,13 +84,16 @@ Requires Swift 6.3.1 and macOS 26 / iOS 26 / tvOS 26 / watchOS 26 / visionOS 26.
 
 ## Architecture
 
-Three library products. Module import names replace spaces with underscores (`import Dependencies`, `import Clocks_Dependency`, `import Dependencies_Test_Support`).
+Two library products. Module import names replace spaces with underscores (`import Dependencies`, `import Dependencies_Test_Support`).
 
 | Product | When to import |
 |---------|----------------|
 | `Dependencies` | App and library code: the `@Dependency` wrapper, `withDependencies`, `prepareDependencies`, and the `Dependency.Key` / `Dependency.Values` / `Dependency.Context` surface. |
-| `Clocks Dependency` | Code that needs a ready-made `\.clock` dependency resolving to a real clock when live and an immediate clock in tests and previews. Gated behind the `Clocks` package trait. |
 | `Dependencies Test Support` | Test targets: re-exports `Dependencies` and adds Swift Testing traits (`.dependencies`, `.dependency(_:_:)`) for per-test and per-suite dependency isolation. |
+
+A ready-made `\.clock` dependency (a real clock when live, an immediate clock
+in tests and previews) lives in
+[swift-clocks-dependencies](https://github.com/swift-foundations/swift-clocks-dependencies).
 
 ---
 

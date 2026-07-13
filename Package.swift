@@ -32,18 +32,18 @@ let package = Package(
             name: "Dependencies Test Support",
             targets: ["Dependencies Test Support"]
         ),
-        .library(
-            name: "Clocks Dependency",
-            targets: ["Clocks Dependency"]
-        ),
     ],
     traits: [
+        // TEMPORARY (E-4 re-export-dissolution queue): no-op trait retained so
+        // consumers passing `traits: ["Clocks"]` keep resolving. The `Clocks
+        // Dependency` integration moved to swift-clocks-dependencies
+        // (2026-07-13); nothing in this package conditions on the trait.
+        // Delete once every consumer drops its `traits: ["Clocks"]` argument.
         .trait(name: "Clocks"),
     ],
     dependencies: [
         .package(url: "https://github.com/swift-foundations/swift-witnesses.git", branch: "main"),
         .package(url: "https://github.com/swift-foundations/swift-environment.git", branch: "main"),
-        .package(url: "https://github.com/swift-primitives/swift-clock-primitives.git", branch: "main"),
     ],
     targets: [
         .target(
@@ -61,15 +61,6 @@ let package = Package(
                 .product(name: "Witnesses", package: "swift-witnesses"),
             ],
             path: "Tests/Support"
-        ),
-        // MARK: - Integration
-        .target(
-            name: "Clocks Dependency",
-            dependencies: [
-                "Dependencies",
-                .product(name: "Clock Primitives", package: "swift-clock-primitives",
-                         condition: .when(traits: ["Clocks"])),
-            ]
         ),
         .testTarget(
             name: "Dependencies Tests",
