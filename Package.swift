@@ -34,11 +34,12 @@ let package = Package(
         ),
     ],
     traits: [
-        // TEMPORARY (E-4 re-export-dissolution queue): no-op trait retained so
-        // consumers passing `traits: ["Clocks"]` keep resolving. The `Clocks
-        // Dependency` integration moved to swift-clocks-dependencies
-        // (2026-07-13); nothing in this package conditions on the trait.
-        // Delete once every consumer drops its `traits: ["Clocks"]` argument.
+        // TEMPORARY (dies at the E-program app cutover): no-op trait retained
+        // SOLELY for the app's frozen `traits: ["Clocks"]` argument — SwiftPM
+        // rejects a trait argument against a package that declares no traits.
+        // Every institute consumer dropped its trait argument in W3 R-a
+        // (2026-07-14); the app's line is the last holdout and is frozen until
+        // its cutover wave.
         .trait(name: "Clocks"),
     ],
     dependencies: [
