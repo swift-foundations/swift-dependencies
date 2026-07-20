@@ -172,4 +172,50 @@
             #expect(modeAware == "overridden")
         }
     }
+
+    // MARK: - L1 Scope Tests (F-001)
+    //
+    // `provideScope` used to modify a throwaway, freshly-initialized L1 `Dependency.Values`
+    // and discard it: any L1-only key override supplied via `.dependencies { }` never
+    // reached the pushed scope, so it read back as the key's un-overridden default. This
+    // suite pins down the fix — provideScope now round-trips L1 through the same
+    // two-store `Witness.Context._withScope` mechanism `withDependencies` uses.
+    //
+    // [INST-TEST-013] extension-pattern suite for `__DependencyTestTrait`, the source
+    // type that owns `provideScope`.
+
+    extension __DependencyTestTrait {
+        @Suite struct `L1 Scope` {
+            @Suite struct Unit {}
+            @Suite struct `Edge Case` {}
+        }
+    }
+
+    extension __DependencyTestTrait.`L1 Scope`.Unit {
+        @Test(.dependencies { $0[L1OnlyKey.self] = "trait-l1-override" })
+        func `provideScope pushes an L1-only override into scope`() {
+            #expect(Dependency<Never>.Context.current[L1OnlyKey.self] == "trait-l1-override")
+        }
+    }
+
+    extension __DependencyTestTrait.`L1 Scope`.`Edge Case` {
+        // Mirrors the pre-existing "Nested Suite Traits" coverage for Witness-backed
+        // keys, but for an L1-only key: since the discard bug applied at every nesting
+        // level (not just the root), a nested override was silently dropped too.
+        @Suite(.dependencies { $0[L1OnlyKey.self] = "outer-l1" })
+        struct `Nested L1 Override` {
+            @Test
+            func `outer scope sees the outer L1-only override`() {
+                #expect(Dependency<Never>.Context.current[L1OnlyKey.self] == "outer-l1")
+            }
+
+            @Suite(.dependencies { $0[L1OnlyKey.self] = "inner-l1" })
+            struct `Inner Suite with Override` {
+                @Test
+                func `inner scope sees its own L1-only override, not the outer one`() {
+                    #expect(Dependency<Never>.Context.current[L1OnlyKey.self] == "inner-l1")
+                }
+            }
+        }
+    }
 #endif
