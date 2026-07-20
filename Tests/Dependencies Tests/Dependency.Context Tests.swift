@@ -81,4 +81,29 @@ extension __DependencyContext.Test.Integration {
             #expect(depValue == "witness-override")
         }
     }
+
+    // F-002: `Dependency.Context.current` used to construct its `__DependencyValues`
+    // with a fresh, default `_l1Values` instead of reading L1's real
+    // `Dependency.Scope.current`, so an L1-only key override pushed by
+    // `withDependencies` was invisible through `Dependency.Context.current`
+    // (and therefore through `@Dependency`, which reads via `.current`).
+    @Test
+    func `Context surfaces L1-only override pushed by withDependencies`() throws {
+        try withDependencies {
+            $0[L1OnlyKey.self] = "l1-round-trip"
+        } operation: {
+            let value = Dependency<Never>.Context.current[L1OnlyKey.self]
+            #expect(value == "l1-round-trip")
+        }
+    }
+
+    @Test
+    func `Context falls back to L1-only key's testValue in test mode with no override`() throws {
+        try withDependencies(mode: .test) { _ in
+            // No override — should resolve L1OnlyKey.testValue via the real L1 scope.
+        } operation: {
+            let value = Dependency<Never>.Context.current[L1OnlyKey.self]
+            #expect(value == "l1-test")
+        }
+    }
 }

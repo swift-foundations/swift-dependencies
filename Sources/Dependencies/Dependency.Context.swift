@@ -11,6 +11,7 @@
 // ===----------------------------------------------------------------------===//
 
 internal import Environment
+public import Dependency_Primitives
 public import Witnesses
 
 /// Hoisted type for ``Dependency.Context``.
@@ -35,8 +36,17 @@ extension __DependencyContext {
     ///
     /// Returns the values from the innermost ``withDependencies`` scope,
     /// or the default values if not in a scope.
+    ///
+    /// - Note: Materializes both stores: L2/L3 witness values from
+    ///   ``Witness/Context/current`` and L1 values from
+    ///   `Dependency_Primitives.Dependency.Scope.current`, so L1-only keys
+    ///   (set via the `__DependencyKey` subscript) resolve correctly here and
+    ///   through the ``Dependency`` property wrapper, not just their default.
     public static var current: __DependencyValues {
-        __DependencyValues(_witnessValues: Witness.Context.current)
+        __DependencyValues(
+            _witnessValues: Witness.Context.current,
+            _l1Values: Dependency_Primitives.Dependency.Scope.current
+        )
     }
 
     /// Detects the execution mode from environment variables.
