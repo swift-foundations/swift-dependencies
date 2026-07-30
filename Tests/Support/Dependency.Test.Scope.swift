@@ -41,15 +41,19 @@ extension Dependency.Test {
         _ modify: @escaping (inout __DependencyValues) -> Void,
         operation: () throws(E) -> T
     ) throws(E) -> T {
-        try Witness.Context._withScope(mode: .test, { witnessValues, l1Values in
-            var depValues = __DependencyValues(
-                _witnessValues: witnessValues,
-                _l1Values: l1Values
-            )
-            modify(&depValues)
-            witnessValues = depValues._witnessValues
-            l1Values = depValues._l1Values
-        }, operation: operation)
+        try Witness.Context._withScope(
+            mode: .test,
+            { witnessValues, l1Values in
+                var depValues = __DependencyValues(
+                    _witnessValues: witnessValues,
+                    _l1Values: l1Values
+                )
+                modify(&depValues)
+                witnessValues = depValues._witnessValues
+                l1Values = depValues._l1Values
+            },
+            operation: operation
+        )
     }
 
     /// Execute an async operation in test mode with dependency overrides.
@@ -60,18 +64,23 @@ extension Dependency.Test {
     /// - Returns: The result of the operation.
     /// - Throws: The typed error from the operation.
     nonisolated(nonsending)
-    public static func withOverrides<T, E: Error>(
-        _ modify: @escaping (inout __DependencyValues) -> Void,
-        operation: nonisolated(nonsending) () async throws(E) -> T
-    ) async throws(E) -> T {
-        try await Witness.Context._withScope(mode: .test, { witnessValues, l1Values in
-            var depValues = __DependencyValues(
-                _witnessValues: witnessValues,
-                _l1Values: l1Values
-            )
-            modify(&depValues)
-            witnessValues = depValues._witnessValues
-            l1Values = depValues._l1Values
-        }, operation: operation)
+        public static func withOverrides<T, E: Error>(
+            _ modify: @escaping (inout __DependencyValues) -> Void,
+            operation: nonisolated(nonsending) () async throws(E) -> T
+        ) async throws(E) -> T
+    {
+        try await Witness.Context._withScope(
+            mode: .test,
+            { witnessValues, l1Values in
+                var depValues = __DependencyValues(
+                    _witnessValues: witnessValues,
+                    _l1Values: l1Values
+                )
+                modify(&depValues)
+                witnessValues = depValues._witnessValues
+                l1Values = depValues._l1Values
+            },
+            operation: operation
+        )
     }
 }

@@ -10,8 +10,8 @@
 //
 // ===----------------------------------------------------------------------===//
 
-internal import Environment
 public import Dependency_Primitives
+internal import Environment
 public import Witnesses
 
 /// Hoisted type for ``Dependency.Context``.
