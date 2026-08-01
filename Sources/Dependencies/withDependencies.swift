@@ -62,7 +62,7 @@ public import Witnesses
 /// - Returns: The result of the operation.
 /// - Throws: The typed error from the operation.
 @inlinable
-public func withDependencies<T, E: Error>(
+public func withDependencies<T, E: Swift.Error>(
     _ modify: (inout __DependencyValues) -> Void,
     operation: () throws(E) -> T
 ) throws(E) -> T {
@@ -92,7 +92,7 @@ public func withDependencies<T, E: Error>(
 /// - Throws: The typed error from the operation.
 @inlinable
 nonisolated(nonsending)
-    public func withDependencies<T, E: Error>(
+    public func withDependencies<T, E: Swift.Error>(
         _ modify: (inout __DependencyValues) -> Void,
         operation: nonisolated(nonsending) () async throws(E) -> T
     ) async throws(E) -> T
@@ -130,7 +130,7 @@ nonisolated(nonsending)
 /// - Returns: The result of the operation.
 /// - Throws: The typed error from the operation.
 @inlinable
-public func withDependencies<T, E: Error>(
+public func withDependencies<T, E: Swift.Error>(
     mode: __DependencyContext.Mode,
     _ modify: ((inout __DependencyValues) -> Void)? = nil,
     operation: () throws(E) -> T
@@ -162,7 +162,7 @@ public func withDependencies<T, E: Error>(
 /// - Throws: The typed error from the operation.
 @inlinable
 nonisolated(nonsending)
-    public func withDependencies<T, E: Error>(
+    public func withDependencies<T, E: Swift.Error>(
         mode: __DependencyContext.Mode,
         _ modify: ((inout __DependencyValues) -> Void)? = nil,
         operation: nonisolated(nonsending) () async throws(E) -> T

@@ -37,7 +37,7 @@ extension Dependency.Test {
     ///   - operation: The test operation to execute.
     /// - Returns: The result of the operation.
     /// - Throws: The typed error from the operation.
-    public static func withOverrides<T, E: Error>(
+    public static func withOverrides<T, E: Swift.Error>(
         _ modify: @escaping (inout __DependencyValues) -> Void,
         operation: () throws(E) -> T
     ) throws(E) -> T {
@@ -64,7 +64,7 @@ extension Dependency.Test {
     /// - Returns: The result of the operation.
     /// - Throws: The typed error from the operation.
     nonisolated(nonsending)
-        public static func withOverrides<T, E: Error>(
+        public static func withOverrides<T, E: Swift.Error>(
             _ modify: @escaping (inout __DependencyValues) -> Void,
             operation: nonisolated(nonsending) () async throws(E) -> T
         ) async throws(E) -> T

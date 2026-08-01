@@ -39,7 +39,7 @@ extension `withDependencies Tests`.Test.Unit {
 
     @Test
     func `Typed throws preserved`() throws {
-        enum TestError: Error { case expected }
+        enum TestError: Swift.Error { case expected }
 
         func throwingOp() throws(TestError) -> String {
             throw TestError.expected

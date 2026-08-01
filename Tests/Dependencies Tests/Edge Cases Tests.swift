@@ -159,7 +159,7 @@ extension `Edge Cases`.Test.`Edge Case` {
 
     @Test
     func `Throws preservation in sync context`() throws {
-        struct TestError: Error, Equatable {}
+        struct TestError: Swift.Error, Equatable {}
 
         #expect(throws: TestError.self) {
             try withDependencies {
@@ -172,7 +172,7 @@ extension `Edge Cases`.Test.`Edge Case` {
 
     @Test
     func `Throws preservation in async context`() async throws {
-        struct AsyncError: Error, Equatable {}
+        struct AsyncError: Swift.Error, Equatable {}
 
         await #expect(throws: AsyncError.self) {
             try await withDependencies {

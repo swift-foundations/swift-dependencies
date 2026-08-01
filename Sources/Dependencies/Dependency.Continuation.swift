@@ -54,7 +54,7 @@ extension __DependencyContext {
     /// - Returns: The result of the operation.
     /// - Throws: The typed error from the operation.
     @inlinable
-    public static func withEscaped<R, E: Error>(
+    public static func withEscaped<R, E: Swift.Error>(
         _ operation: (Dependency<Never>.Continuation) throws(E) -> R
     ) throws(E) -> R {
         try Witness.Context.withEscaped(operation)
@@ -66,7 +66,7 @@ extension __DependencyContext {
     /// - Returns: The result of the operation.
     /// - Throws: The typed error from the operation.
     @inlinable
-    public static func withEscaped<R, E: Error>(
+    public static func withEscaped<R, E: Swift.Error>(
         _ operation: (Dependency<Never>.Continuation) async throws(E) -> R
     ) async throws(E) -> R {
         try await Witness.Context.withEscaped(operation)

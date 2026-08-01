@@ -212,7 +212,7 @@ extension __DependencyValues.Test.Comprehensive.Integration {
 
     @Test
     func `withDependencies propagates errors`() throws {
-        struct TestError: Error, Equatable {}
+        struct TestError: Swift.Error, Equatable {}
 
         #expect(throws: TestError.self) {
             try withDependencies {
@@ -237,7 +237,7 @@ extension __DependencyValues.Test.Comprehensive.Integration {
 
     @Test
     func `Async withDependencies propagates errors`() async throws {
-        struct AsyncTestError: Error, Equatable {}
+        struct AsyncTestError: Swift.Error, Equatable {}
 
         await #expect(throws: AsyncTestError.self) {
             try await withDependencies {
