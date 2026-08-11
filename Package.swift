@@ -33,15 +33,6 @@ let package = Package(
             targets: ["Dependencies Test Support"]
         ),
     ],
-    traits: [
-        // TEMPORARY (dies at the E-program app cutover): no-op trait retained
-        // SOLELY for the app's frozen `traits: ["Clocks"]` argument — SwiftPM
-        // rejects a trait argument against a package that declares no traits.
-        // Every institute consumer dropped its trait argument in W3 R-a
-        // (2026-07-14); the app's line is the last holdout and is frozen until
-        // its cutover wave.
-        .trait(name: "Clocks"),
-    ],
     dependencies: [
         .package(url: "https://github.com/swift-foundations/swift-witnesses.git", branch: "main"),
         .package(url: "https://github.com/swift-foundations/swift-environment.git", branch: "main"),
