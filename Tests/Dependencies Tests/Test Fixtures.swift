@@ -17,7 +17,9 @@ import Testing
 @Witness
 struct TestAPI: Sendable {
     var fetch: @Sendable (_ id: Int) async throws(Witness.Unimplemented.Error) -> String
-    var update: @Sendable (_ id: Int, _ value: String) async throws(Witness.Unimplemented.Error) -> Void
+    var update:
+        @Sendable (_ id: Int, _ value: String) async throws(Witness.Unimplemented.Error) ->
+            Void
 }
 
 extension TestAPI: Dependency.Key {

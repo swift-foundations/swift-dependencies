@@ -47,6 +47,7 @@ extension Dependency {
 
 // MARK: - Context Extension
 
+// swift-format-ignore: AmbiguousTrailingClosureOverload
 extension __DependencyContext {
     /// Capture the current dependency context for use in escaping closures.
     ///
