@@ -10,7 +10,7 @@
 //
 // ===----------------------------------------------------------------------===//
 
-public import Dependency_Primitives
+import Dependency_Primitives
 internal import Environment
 public import Witnesses
 
