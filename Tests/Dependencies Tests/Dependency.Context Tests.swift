@@ -1,15 +1,3 @@
-// ===----------------------------------------------------------------------===//
-//
-// This source file is part of the swift-dependencies open source project
-//
-// Copyright (c) 2024-2025 Coen ten Thije Boonkkamp and the swift-dependencies
-// project authors
-// Licensed under Apache License v2.0
-//
-// See LICENSE for license information
-//
-// ===----------------------------------------------------------------------===//
-
 import Testing
 
 @testable import Dependencies
@@ -22,13 +10,11 @@ extension __DependencyContext {
     }
 }
 
-// MARK: - Unit Tests
-
 extension __DependencyContext.Test.Unit {
     @Test
     func `Current returns default values outside scope`() async throws {
         let value = Dependency<Never>.Context.current[SimpleKey.self]
-        // Outside any scope, mode is .live
+
         #expect(value == "live")
     }
 
@@ -40,40 +26,34 @@ extension __DependencyContext.Test.Unit {
 
     @Test
     func `Detect returns correct mode based on environment`() {
-        // Note: In actual test environment, this might return .test
-        // because XCTestConfigurationFilePath or SWIFT_TESTING may be set
+
         let detected = Dependency<Never>.Context.detect()
-        // This test just verifies detect() runs without error
+
         #expect([Dependency<Never>.Context.Mode.live, .test, .preview].contains(detected))
     }
 }
 
-// MARK: - Edge Case Tests
-
 extension __DependencyContext.Test.`Edge Case` {
     @Test
     func `Context tracks mode changes through withDependencies`() throws {
-        // Start in live mode
+
         #expect(Dependency<Never>.Context.mode == .live)
 
         try withDependencies(mode: .test) { _ in
-            // Setting mode
+
         } operation: {
-            // Inside test mode
+
             #expect(Dependency<Never>.Context.mode == .test)
         }
 
-        // Back to live mode
         #expect(Dependency<Never>.Context.mode == .live)
     }
 }
 
-// MARK: - Integration Tests
-
 extension __DependencyContext.Test.Integration {
     @Test
     func `Context delegates to Witness.Context`() async throws {
-        // Verify that Dependency.Context.current reflects Witness.Context changes
+
         try await Witness.Context.with { values in
             values[SimpleKey.self] = "witness-override"
         } operation: {
@@ -82,11 +62,6 @@ extension __DependencyContext.Test.Integration {
         }
     }
 
-    // F-002: `Dependency.Context.current` used to construct its `__DependencyValues`
-    // with a fresh, default `_l1Values` instead of reading L1's real
-    // `Dependency.Scope.current`, so an L1-only key override pushed by
-    // `withDependencies` was invisible through `Dependency.Context.current`
-    // (and therefore through `@Dependency`, which reads via `.current`).
     @Test
     func `Context surfaces L1-only override pushed by withDependencies`() throws {
         try withDependencies {
@@ -100,7 +75,7 @@ extension __DependencyContext.Test.Integration {
     @Test
     func `Context falls back to L1-only key's testValue in test mode with no override`() throws {
         try withDependencies(mode: .test) { _ in
-            // No override — should resolve L1OnlyKey.testValue via the real L1 scope.
+
         } operation: {
             let value = Dependency<Never>.Context.current[L1OnlyKey.self]
             #expect(value == "l1-test")

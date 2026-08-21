@@ -1,15 +1,3 @@
-// ===----------------------------------------------------------------------===//
-//
-// This source file is part of the swift-dependencies open source project
-//
-// Copyright (c) 2024-2025 Coen ten Thije Boonkkamp and the swift-dependencies
-// project authors
-// Licensed under Apache License v2.0
-//
-// See LICENSE for license information
-//
-// ===----------------------------------------------------------------------===//
-
 import Testing
 
 @testable import Dependencies
@@ -23,7 +11,6 @@ struct `Dependency Tests` {
     }
 }
 
-/// Helper type that uses @Dependency property wrapper.
 struct DependencyConsumer: Sendable {
     @Dependency(\.simple) var simple
     @Dependency(\.testAPI) var testAPI
@@ -38,8 +25,6 @@ extension DependencyConsumer {
         try await testAPI.fetch(id: id)
     }
 }
-
-// MARK: - Unit Tests
 
 extension `Dependency Tests`.Test.Unit {
     @Test
@@ -62,24 +47,20 @@ extension `Dependency Tests`.Test.Unit {
     }
 }
 
-// MARK: - Edge Case Tests
-
 extension `Dependency Tests`.Test.`Edge Case` {
     @Test
     func `Property wrapper reflects scope changes`() throws {
         let consumer = DependencyConsumer()
 
-        // Before scope
         #expect(consumer.getSimple() == "live")
 
         try withDependencies {
             $0.simple = "scoped"
         } operation: {
-            // Inside scope
+
             #expect(consumer.getSimple() == "scoped")
         }
 
-        // After scope
         #expect(consumer.getSimple() == "live")
     }
 
@@ -100,8 +81,6 @@ extension `Dependency Tests`.Test.`Edge Case` {
         }
     }
 }
-
-// MARK: - Integration Tests
 
 extension `Dependency Tests`.Test.Integration {
     @Test
@@ -136,7 +115,6 @@ extension `Dependency Tests`.Test.Integration {
             let result1 = try await consumer.fetchFromAPI(id: 1)
             #expect(result1 == "async-result-1")
 
-            // Simulate async work
             try await Task.sleep(for: .milliseconds(1))
 
             let result2 = try await consumer.fetchFromAPI(id: 2)

@@ -1,17 +1,5 @@
 // swift-tools-version: 6.4
 
-// ===----------------------------------------------------------------------===//
-//
-// This source file is part of the swift-dependencies open source project
-//
-// Copyright (c) 2024-2025 Coen ten Thije Boonkkamp and the swift-dependencies
-// project authors
-// Licensed under Apache License v2.0
-//
-// See LICENSE for license information
-//
-// ===----------------------------------------------------------------------===//
-
 import PackageDescription
 
 let package = Package(

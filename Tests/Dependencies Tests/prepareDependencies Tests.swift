@@ -1,15 +1,3 @@
-// ===----------------------------------------------------------------------===//
-//
-// This source file is part of the swift-dependencies open source project
-//
-// Copyright (c) 2024-2025 Coen ten Thije Boonkkamp and the swift-dependencies
-// project authors
-// Licensed under Apache License v2.0
-//
-// See LICENSE for license information
-//
-// ===----------------------------------------------------------------------===//
-
 import Testing
 import Witnesses
 
@@ -23,8 +11,6 @@ struct `prepareDependencies Tests` {
         @Suite struct Integration {}
     }
 }
-
-// MARK: - Unit Tests
 
 extension `prepareDependencies Tests`.Test.Unit {
     @Test
@@ -62,7 +48,7 @@ extension `prepareDependencies Tests`.Test.Unit {
     @Test
     func `Store accepts values`() {
         prepareDependencies { store in
-            // Verify store.set compiles and runs
+
             store.set(SimpleKey.self, value: "value1")
             store.set(
                 TestAPI.self,
@@ -72,20 +58,18 @@ extension `prepareDependencies Tests`.Test.Unit {
                 )
             )
         } operation: {
-            // Operation completes
+
         }
 
         #expect(Bool(true))
     }
 }
 
-// MARK: - Edge Case Tests
-
 extension `prepareDependencies Tests`.Test.`Edge Case` {
     @Test
     func `Empty preparation works`() {
         let result = prepareDependencies { _ in
-            // No configuration
+
         } operation: {
             "empty"
         }
@@ -109,8 +93,6 @@ extension `prepareDependencies Tests`.Test.`Edge Case` {
     }
 }
 
-// MARK: - Integration Tests
-
 extension `prepareDependencies Tests`.Test.Integration {
     @Test
     func `withDependencies works inside prepareDependencies`() {
@@ -130,11 +112,10 @@ extension `prepareDependencies Tests`.Test.Integration {
         prepareDependencies { store in
             store.set(SimpleKey.self, value: "stored")
 
-            // Can retrieve from store directly
             let retrieved = store.get(SimpleKey.self)
             #expect(retrieved == "stored")
         } operation: {
-            // Values stored in preparation store
+
         }
     }
 
@@ -143,11 +124,10 @@ extension `prepareDependencies Tests`.Test.Integration {
         prepareDependencies { store in
             store.set(SimpleKey.self, value: "current")
         } operation: {
-            // Witness.Preparation.current should be set
+
             let currentStore = Witness.Preparation.current
             #expect(currentStore != nil)
 
-            // Can read from current store
             if let store = currentStore {
                 let value = store.get(SimpleKey.self)
                 #expect(value == "current")

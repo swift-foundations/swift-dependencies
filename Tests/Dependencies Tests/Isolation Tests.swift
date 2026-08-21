@@ -1,15 +1,3 @@
-// ===----------------------------------------------------------------------===//
-//
-// This source file is part of the swift-dependencies open source project
-//
-// Copyright (c) 2024-2025 Coen ten Thije Boonkkamp and the swift-dependencies
-// project authors
-// Licensed under Apache License v2.0
-//
-// See LICENSE for license information
-//
-// ===----------------------------------------------------------------------===//
-
 import Testing
 
 @testable import Dependencies
@@ -23,14 +11,11 @@ struct `Isolation` {
     }
 }
 
-// MARK: - Unit Tests
-
 extension `Isolation`.Test.Unit {
     @Test
     func `Each test starts with clean context`() {
         @Dependency(\.counting) var counting
 
-        // First access should return fresh test value
         let value = counting.increment()
         #expect(value == 1)
     }
@@ -39,7 +24,6 @@ extension `Isolation`.Test.Unit {
     func `Each test starts with clean context (duplicate)`() {
         @Dependency(\.counting) var counting
 
-        // Should also be fresh, not polluted from cleanContext1
         let value = counting.increment()
         #expect(value == 1)
     }
@@ -48,7 +32,6 @@ extension `Isolation`.Test.Unit {
     func `withDependencies creates isolated scope`() {
         @Dependency(\.simple) var simple
 
-        // Outside scope
         let outside = simple
 
         withDependencies {
@@ -58,12 +41,9 @@ extension `Isolation`.Test.Unit {
             #expect(inside == "inside-scope")
         }
 
-        // After scope, should be back to original
         #expect(simple == outside)
     }
 }
-
-// MARK: - Edge Case Tests
 
 extension `Isolation`.Test.`Edge Case` {
     @Test
@@ -76,10 +56,9 @@ extension `Isolation`.Test.`Edge Case` {
                     await withDependencies {
                         $0.simple = "task-\(i)"
                     } operation: {
-                        // Simulate work
+
                         await Task.yield()
 
-                        // Each task should see its own value
                         let value = Dependency<Never>.Context.current.simple
                         #expect(value == "task-\(i)")
                     }
@@ -101,16 +80,16 @@ extension `Isolation`.Test.`Edge Case` {
 
             withDependencies {
                 $0.simple = "level-2"
-                // eagerChild not overridden
+
             } operation: {
                 #expect(Dependency<Never>.Context.current.simple == "level-2")
-                #expect(Dependency<Never>.Context.current.eagerChild == 1)  // Inherited
+                #expect(Dependency<Never>.Context.current.eagerChild == 1)
 
                 withDependencies {
                     $0.eagerChild = 3
-                    // simple not overridden
+
                 } operation: {
-                    #expect(Dependency<Never>.Context.current.simple == "level-2")  // Inherited
+                    #expect(Dependency<Never>.Context.current.simple == "level-2")
                     #expect(Dependency<Never>.Context.current.eagerChild == 3)
                 }
             }
@@ -128,7 +107,6 @@ extension `Isolation`.Test.`Edge Case` {
                 #expect(Dependency<Never>.Context.mode == .preview)
             }
 
-            // Back to test mode
             #expect(Dependency<Never>.Context.mode == .test)
         }
     }
@@ -157,7 +135,6 @@ extension `Isolation`.Test.`Edge Case` {
             }
         }
 
-        // Use continuations outside their original scopes
         continuation1?.yield {
             captured1 = Dependency<Never>.Context.current.simple
         }
@@ -170,8 +147,6 @@ extension `Isolation`.Test.`Edge Case` {
         #expect(captured2 == "context-2")
     }
 }
-
-// MARK: - Integration Tests
 
 extension `Isolation`.Test.Integration {
     @Test
@@ -200,7 +175,6 @@ extension `Isolation`.Test.Integration {
 
             #expect(results == ["group-child-0", "group-child-1", "group-child-2"])
 
-            // Root should be unaffected
             #expect(Dependency<Never>.Context.current.simple == "group-root")
         }
     }

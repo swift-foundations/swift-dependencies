@@ -1,21 +1,7 @@
-// ===----------------------------------------------------------------------===//
-//
-// This source file is part of the swift-dependencies open source project
-//
-// Copyright (c) 2024-2025 Coen ten Thije Boonkkamp and the swift-dependencies
-// project authors
-// Licensed under Apache License v2.0
-//
-// See LICENSE for license information
-//
-// ===----------------------------------------------------------------------===//
-
 #if canImport(Testing) && compiler(>=6)
     import Testing
     import Dependencies
     import Dependencies_Test_Support
-
-    // MARK: - Basic Trait Tests
 
     @Suite(.dependencies)
     struct `Dependency Test Traits` {
@@ -28,13 +14,11 @@
         @Test
         func `dependencies trait provides isolation`() {
             @Dependency(\.counting) var counting
-            let client = counting  // Resolve once to preserve state
+            let client = counting
             #expect(client.increment() == 1)
             #expect(client.increment() == 2)
         }
     }
-
-    // MARK: - Single Dependency Override Tests
 
     @Suite(.dependencies)
     struct `Single Dependency Override` {
@@ -63,8 +47,6 @@
             #expect(optionalValue == "some-value")
         }
     }
-
-    // MARK: - Multiple Dependencies Override Tests
 
     @Suite(.dependencies)
     struct `Multiple Dependencies Override` {
@@ -103,8 +85,6 @@
         }
     }
 
-    // MARK: - Nested Suite Tests
-
     @Suite(.dependencies)
     struct `Nested Suite Traits` {
 
@@ -133,15 +113,13 @@
         }
     }
 
-    // MARK: - Isolation Tests
-
     @Suite(.dependencies)
     struct `Trait Isolation` {
 
         @Test
         func `test 1 - counting starts fresh`() {
             @Dependency(\.counting) var counting
-            let client = counting  // Resolve once to preserve state
+            let client = counting
             #expect(client.increment() == 1)
             #expect(client.increment() == 2)
         }
@@ -149,13 +127,11 @@
         @Test
         func `test 2 - counting also starts fresh (isolated from test 1)`() {
             @Dependency(\.counting) var counting
-            let client = counting  // Resolve once to preserve state
+            let client = counting
             #expect(client.increment() == 1)
             #expect(client.increment() == 2)
         }
     }
-
-    // MARK: - Mode Resolution Tests
 
     @Suite(.dependencies)
     struct `Mode Resolution with Traits` {
@@ -173,17 +149,6 @@
         }
     }
 
-    // MARK: - L1 Scope Tests (F-001)
-    //
-    // `provideScope` used to modify a throwaway, freshly-initialized L1 `Dependency.Values`
-    // and discard it: any L1-only key override supplied via `.dependencies { }` never
-    // reached the pushed scope, so it read back as the key's un-overridden default. This
-    // suite pins down the fix — provideScope now round-trips L1 through the same
-    // two-store `Witness.Context._withScope` mechanism `withDependencies` uses.
-    //
-    // [INST-TEST-013] extension-pattern suite for `__DependencyTestTrait`, the source
-    // type that owns `provideScope`.
-
     extension __DependencyTestTrait {
         @Suite struct `L1 Scope` {
             @Suite struct Unit {}
@@ -199,9 +164,7 @@
     }
 
     extension __DependencyTestTrait.`L1 Scope`.`Edge Case` {
-        // Mirrors the pre-existing "Nested Suite Traits" coverage for Witness-backed
-        // keys, but for an L1-only key: since the discard bug applied at every nesting
-        // level (not just the root), a nested override was silently dropped too.
+
         @Suite(.dependencies { $0[L1OnlyKey.self] = "outer-l1" })
         struct `Nested L1 Override` {
             @Test

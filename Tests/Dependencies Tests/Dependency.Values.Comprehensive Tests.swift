@@ -1,15 +1,3 @@
-// ===----------------------------------------------------------------------===//
-//
-// This source file is part of the swift-dependencies open source project
-//
-// Copyright (c) 2024-2025 Coen ten Thije Boonkkamp and the swift-dependencies
-// project authors
-// Licensed under Apache License v2.0
-//
-// See LICENSE for license information
-//
-// ===----------------------------------------------------------------------===//
-
 import Testing
 
 @testable import Dependencies
@@ -21,8 +9,6 @@ extension __DependencyValues.Test {
         @Suite struct Integration {}
     }
 }
-
-// MARK: - Unit Tests
 
 extension __DependencyValues.Test.Comprehensive.Unit {
     @Test
@@ -77,8 +63,6 @@ extension __DependencyValues.Test.Comprehensive.Unit {
     }
 }
 
-// MARK: - Edge Case Tests
-
 extension __DependencyValues.Test.Comprehensive.`Edge Case` {
     @Test
     func `Empty modification preserves existing values`() {
@@ -86,7 +70,7 @@ extension __DependencyValues.Test.Comprehensive.`Edge Case` {
             $0.simple = "original"
         } operation: {
             withDependencies { _ in
-                // Empty modification
+
             } operation: {
                 let value = Dependency<Never>.Context.current.simple
                 #expect(value == "original")
@@ -123,7 +107,6 @@ extension __DependencyValues.Test.Comprehensive.`Edge Case` {
             captured = Dependency<Never>.Context.current[CounterKey.self]
         }
 
-        // Value should be copied, not referenced
         #expect(captured?.count == 10)
     }
 
@@ -157,12 +140,11 @@ extension __DependencyValues.Test.Comprehensive.`Edge Case` {
             withDependencies {
                 $0.simple = "inner"
             } operation: {
-                // Inner scope has inner value
+
                 let inner = Dependency<Never>.Context.current.simple
                 #expect(inner == "inner")
             }
 
-            // Outer scope still has outer value
             let outer = Dependency<Never>.Context.current.simple
             #expect(outer == "outer")
         }
@@ -178,7 +160,7 @@ extension __DependencyValues.Test.Comprehensive.`Edge Case` {
                     await withDependencies {
                         $0.simple = "task-\(i)"
                     } operation: {
-                        // Each task should see its own value
+
                         let value = Dependency<Never>.Context.current.simple
                         #expect(value == "task-\(i)")
                     }
@@ -189,14 +171,11 @@ extension __DependencyValues.Test.Comprehensive.`Edge Case` {
                 await task.value
             }
 
-            // Outer scope still intact
             let outer = Dependency<Never>.Context.current.simple
             #expect(outer == "async-outer")
         }
     }
 }
-
-// MARK: - Integration Tests
 
 extension __DependencyValues.Test.Comprehensive.Integration {
     @Test
@@ -280,7 +259,6 @@ extension __DependencyValues.Test.Comprehensive.Integration {
                 }
             }
 
-            // Wait for detached task
             try? await Task.sleep(for: .milliseconds(100))
 
             #expect(box.value == "detached-propagated")

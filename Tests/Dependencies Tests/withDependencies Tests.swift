@@ -1,15 +1,3 @@
-// ===----------------------------------------------------------------------===//
-//
-// This source file is part of the swift-dependencies open source project
-//
-// Copyright (c) 2024-2025 Coen ten Thije Boonkkamp and the swift-dependencies
-// project authors
-// Licensed under Apache License v2.0
-//
-// See LICENSE for license information
-//
-// ===----------------------------------------------------------------------===//
-
 import Testing
 
 @testable import Dependencies
@@ -22,8 +10,6 @@ struct `withDependencies Tests` {
         @Suite struct Integration {}
     }
 }
-
-// MARK: - Unit Tests
 
 extension `withDependencies Tests`.Test.Unit {
     @Test
@@ -57,7 +43,7 @@ extension `withDependencies Tests`.Test.Unit {
     @Test
     func `Mode-aware override works`() throws {
         try withDependencies(mode: .test) { _ in
-            // Empty modification - just setting mode
+
         } operation: {
             #expect(Dependency<Never>.Context.mode == .test)
             let value = Dependency<Never>.Context.current[SimpleKey.self]
@@ -65,8 +51,6 @@ extension `withDependencies Tests`.Test.Unit {
         }
     }
 }
-
-// MARK: - Edge Case Tests
 
 extension `withDependencies Tests`.Test.`Edge Case` {
     @Test
@@ -92,9 +76,9 @@ extension `withDependencies Tests`.Test.`Edge Case` {
             $0[SimpleKey.self] = "set"
         } operation: {
             try withDependencies { _ in
-                // No modifications
+
             } operation: {
-                // Should still have parent's value
+
                 let value = Dependency<Never>.Context.current[SimpleKey.self]
                 #expect(value == "set")
             }
@@ -110,8 +94,6 @@ extension `withDependencies Tests`.Test.`Edge Case` {
         #expect(result == 42)
     }
 }
-
-// MARK: - Integration Tests
 
 extension `withDependencies Tests`.Test.Integration {
     @Test
@@ -161,7 +143,7 @@ extension `withDependencies Tests`.Test.Integration {
         try withDependencies {
             $0[SimpleKey.self] = "delegated"
         } operation: {
-            // Should be visible via Witness.Context
+
             let witnessValue = Witness.Context.current[SimpleKey.self]
             #expect(witnessValue == "delegated")
         }

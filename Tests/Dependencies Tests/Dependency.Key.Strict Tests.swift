@@ -1,15 +1,3 @@
-// ===----------------------------------------------------------------------===//
-//
-// This source file is part of the swift-dependencies open source project
-//
-// Copyright (c) 2024-2025 Coen ten Thije Boonkkamp and the swift-dependencies
-// project authors
-// Licensed under Apache License v2.0
-//
-// See LICENSE for license information
-//
-// ===----------------------------------------------------------------------===//
-
 import Testing
 
 @testable import Dependencies
@@ -23,12 +11,10 @@ struct `Dependency.Key.Strict Tests` {
     }
 }
 
-// MARK: - Unit Tests
-
 extension `Dependency.Key.Strict Tests`.Test.Unit {
     @Test
     func `Strict key conforms to Witness.Key`() {
-        // Verify StrictTestKey conforms to the protocol hierarchy
+
         let _: any Dependency<Never>.Key.Strict.Type = StrictTestKey.self
         let _: any Dependency<Never>.Key.Type = StrictTestKey.self
         #expect(Bool(true))
@@ -40,8 +26,6 @@ extension `Dependency.Key.Strict Tests`.Test.Unit {
         #expect(value == "strict-live")
     }
 }
-
-// MARK: - Edge Case Tests
 
 extension `Dependency.Key.Strict Tests`.Test.`Edge Case` {
     @Test
@@ -66,7 +50,7 @@ extension `Dependency.Key.Strict Tests`.Test.`Edge Case` {
 
     @Test
     func `Strict key works in live mode without override`() {
-        // In live mode, strict keys use their liveValue
+
         withDependencies(mode: .live) { _ in
         } operation: {
             let value = Dependency<Never>.Context.current[StrictTestKey.self]
@@ -74,8 +58,6 @@ extension `Dependency.Key.Strict Tests`.Test.`Edge Case` {
         }
     }
 }
-
-// MARK: - Integration Tests
 
 extension `Dependency.Key.Strict Tests`.Test.Integration {
     @Test
@@ -111,9 +93,6 @@ extension `Dependency.Key.Strict Tests`.Test.Integration {
     }
 }
 
-// MARK: - Test Support
-
-/// A strict dependency key for testing
 enum StrictTestKey: Dependency<Never>.Key.Strict {}
 
 extension StrictTestKey {
@@ -121,7 +100,6 @@ extension StrictTestKey {
     static var liveValue: String { "strict-live" }
 }
 
-/// Another strict key with different value type
 enum AnotherStrictKey: Dependency<Never>.Key.Strict {}
 
 extension AnotherStrictKey {
@@ -129,7 +107,6 @@ extension AnotherStrictKey {
     static var liveValue: Int { 0 }
 }
 
-/// Extension to add keypath access
 extension Dependency<Never>.Values {
     var strictTest: String {
         get { self[StrictTestKey.self] }

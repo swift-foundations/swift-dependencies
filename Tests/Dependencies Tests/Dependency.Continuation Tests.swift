@@ -1,15 +1,3 @@
-// ===----------------------------------------------------------------------===//
-//
-// This source file is part of the swift-dependencies open source project
-//
-// Copyright (c) 2024-2025 Coen ten Thije Boonkkamp and the swift-dependencies
-// project authors
-// Licensed under Apache License v2.0
-//
-// See LICENSE for license information
-//
-// ===----------------------------------------------------------------------===//
-
 import Testing
 
 @testable import Dependencies
@@ -22,13 +10,10 @@ extension __DependencyContext.Test {
     }
 }
 
-// MARK: - Unit Tests
-
 extension __DependencyContext.Test.Continuation.Unit {
     @Test
     func `Continuation is typealias for Witness.Context.Escaped`() {
-        // This test verifies the typealias compiles correctly
-        // The actual type checking happens at compile time
+
         #expect(Bool(true))
     }
 
@@ -43,8 +28,6 @@ extension __DependencyContext.Test.Continuation.Unit {
         #expect(capturedContinuation != nil)
     }
 }
-
-// MARK: - Edge Case Tests
 
 extension __DependencyContext.Test.Continuation.`Edge Case` {
     @Test
@@ -76,7 +59,6 @@ extension __DependencyContext.Test.Continuation.`Edge Case` {
             }
         }
 
-        // Now outside the withDependencies scope
         var capturedValue: String?
         savedContinuation?.yield {
             capturedValue = Dependency<Never>.Context.current[SimpleKey.self]
@@ -121,8 +103,6 @@ extension __DependencyContext.Test.Continuation.`Edge Case` {
         #expect(value2 == "second")
     }
 }
-
-// MARK: - Integration Tests
 
 extension __DependencyContext.Test.Continuation.Integration {
     @Test

@@ -1,19 +1,6 @@
-// ===----------------------------------------------------------------------===//
-//
-// This source file is part of the swift-dependencies open source project
-//
-// Copyright (c) 2024-2025 Coen ten Thije Boonkkamp and the swift-dependencies
-// project authors
-// Licensed under Apache License v2.0
-//
-// See LICENSE for license information
-//
-// ===----------------------------------------------------------------------===//
-
 public import Dependencies
 import Testing
 
-/// Test witness for basic dependency operations.
 @Witness
 struct TestAPI: Sendable {
     var fetch: @Sendable (_ id: Int) async throws(Witness.Unimplemented.Error) -> String
@@ -38,7 +25,6 @@ extension TestAPI: Dependency.Key {
     }
 }
 
-/// Extension for KeyPath-based access.
 extension Dependency.Values {
     var testAPI: TestAPI {
         get { self[TestAPI.self] }
@@ -46,7 +32,6 @@ extension Dependency.Values {
     }
 }
 
-/// Simple non-witness key for basic testing.
 struct SimpleKey: Dependency.Key {}
 
 extension SimpleKey {
@@ -56,7 +41,6 @@ extension SimpleKey {
     static var previewValue: String { "preview" }
 }
 
-/// Extension for KeyPath-based access.
 extension Dependency.Values {
     var simple: String {
         get { self[SimpleKey.self] }
@@ -64,9 +48,6 @@ extension Dependency.Values {
     }
 }
 
-// MARK: - Additional Test Keys
-
-/// Int key for testing
 enum IntKey: Dependency.Key {}
 
 extension IntKey {
@@ -81,7 +62,6 @@ extension Dependency.Values {
     }
 }
 
-/// String key for testing (distinct from SimpleKey)
 enum StringKey: Dependency.Key {}
 
 extension StringKey {
@@ -96,7 +76,6 @@ extension Dependency.Values {
     }
 }
 
-/// Eager child dependency - resolved at access time
 enum EagerChildKey: Dependency.Key {}
 
 extension EagerChildKey {
@@ -111,7 +90,6 @@ extension Dependency.Values {
     }
 }
 
-/// Lazy child dependency - resolved when closure is called
 enum LazyChildKey: Dependency.Key {}
 
 extension LazyChildKey {
@@ -126,7 +104,6 @@ extension Dependency.Values {
     }
 }
 
-/// Key with distinct values for each mode
 enum ModeAwareKey: Dependency.Key {}
 
 extension ModeAwareKey {
@@ -142,7 +119,6 @@ extension Dependency.Values {
     }
 }
 
-/// Key with optional value
 enum OptionalKey: Dependency.Key {}
 
 extension OptionalKey {
@@ -157,7 +133,6 @@ extension Dependency.Values {
     }
 }
 
-/// Counting client for isolation testing
 struct CountingClient: Sendable {
     private let _increment: @Sendable () -> Int
 
@@ -172,7 +147,6 @@ extension CountingClient {
     }
 }
 
-/// Unsafe container for testing (not for production use)
 final class UnsafeCurrentValueContainer<Value>: @unchecked Sendable {
     var value: Value
 
@@ -181,7 +155,6 @@ final class UnsafeCurrentValueContainer<Value>: @unchecked Sendable {
     }
 }
 
-/// Counting key that tracks invocations
 enum CountingKey: Dependency.Key {}
 
 extension CountingKey {

@@ -1,15 +1,3 @@
-// ===----------------------------------------------------------------------===//
-//
-// This source file is part of the swift-dependencies open source project
-//
-// Copyright (c) 2024-2025 Coen ten Thije Boonkkamp and the swift-dependencies
-// project authors
-// Licensed under Apache License v2.0
-//
-// See LICENSE for license information
-//
-// ===----------------------------------------------------------------------===//
-
 import Testing
 
 @testable import Dependencies
@@ -22,8 +10,6 @@ struct `Resolution` {
         @Suite struct Integration {}
     }
 }
-
-// MARK: - Unit Tests
 
 extension `Resolution`.Test.Unit {
     @Test
@@ -44,12 +30,9 @@ extension `Resolution`.Test.Unit {
     func `Dependency access outside scope uses defaults`() {
         @Dependency(\.simple) var simple: String
 
-        // Outside withDependencies, uses mode-based default
         #expect(simple == "test" || simple == "live")
     }
 }
-
-// MARK: - Edge Case Tests
 
 extension `Resolution`.Test.`Edge Case` {
     @Test
@@ -99,19 +82,15 @@ extension `Resolution`.Test.`Edge Case` {
                     #expect(level3 == "level-3")
                 }
 
-                // Back to level 2
                 let backToLevel2 = Dependency<Never>.Context.current.simple
                 #expect(backToLevel2 == "level-2")
             }
 
-            // Back to level 1
             let backToLevel1 = Dependency<Never>.Context.current.simple
             #expect(backToLevel1 == "level-1")
         }
     }
 }
-
-// MARK: - Integration Tests
 
 extension `Resolution`.Test.Integration {
     @Test
@@ -133,7 +112,7 @@ extension `Resolution`.Test.Integration {
         await withDependencies {
             $0.simple = "async-value"
         } operation: {
-            // Simulate async work
+
             await Task.yield()
 
             let value = Dependency<Never>.Context.current.simple
@@ -143,20 +122,18 @@ extension `Resolution`.Test.Integration {
 
     @Test
     func `Resolution with mode switching`() {
-        // Start in test mode
+
         withDependencies(mode: .test) { _ in
         } operation: {
             let testValue = Dependency<Never>.Context.current.simple
             #expect(testValue == "test")
 
-            // Switch to preview mode
             withDependencies(mode: .preview) { _ in
             } operation: {
                 let previewValue = Dependency<Never>.Context.current.simple
                 #expect(previewValue == "preview")
             }
 
-            // Back to test mode
             let backToTest = Dependency<Never>.Context.current.simple
             #expect(backToTest == "test")
         }

@@ -1,15 +1,3 @@
-// ===----------------------------------------------------------------------===//
-//
-// This source file is part of the swift-dependencies open source project
-//
-// Copyright (c) 2024-2025 Coen ten Thije Boonkkamp and the swift-dependencies
-// project authors
-// Licensed under Apache License v2.0
-//
-// See LICENSE for license information
-//
-// ===----------------------------------------------------------------------===//
-
 import Testing
 
 @testable import Dependencies
@@ -22,8 +10,6 @@ struct `Edge Cases` {
         @Suite struct Integration {}
     }
 }
-
-// MARK: - Unit Tests
 
 extension `Edge Cases`.Test.Unit {
     @Test
@@ -80,8 +66,6 @@ extension `Edge Cases`.Test.Unit {
     }
 }
 
-// MARK: - Edge Case Tests
-
 extension `Edge Cases`.Test.`Edge Case` {
     @Test
     func `Deeply nested model hierarchy`() {
@@ -109,7 +93,6 @@ extension `Edge Cases`.Test.`Edge Case` {
             NestedModel()
         }
 
-        // Each model should reflect current context when accessed
         withDependencies {
             $0.intValue = 100
             $0.stringValue = "hundred"
@@ -120,8 +103,7 @@ extension `Edge Cases`.Test.`Edge Case` {
             #expect(model2.getStringValue() == "hundred")
         }
 
-        // Outside scope, back to defaults (live mode)
-        #expect(model1.getIntValue() == -1)  // liveValue
+        #expect(model1.getIntValue() == -1)
         #expect(model1.getStringValue() == "live-string")
     }
 
@@ -150,10 +132,10 @@ extension `Edge Cases`.Test.`Edge Case` {
     @Test
     func `Empty withDependencies scope`() {
         withDependencies(mode: .test) { _ in
-            // No modifications
+
         } operation: {
             @Dependency(\.intValue) var value
-            #expect(value == 42)  // testValue
+            #expect(value == 42)
         }
     }
 
@@ -184,8 +166,6 @@ extension `Edge Cases`.Test.`Edge Case` {
         }
     }
 }
-
-// MARK: - Integration Tests
 
 extension `Edge Cases`.Test.Integration {
     @Test
@@ -271,7 +251,6 @@ extension `Edge Cases`.Test.Integration {
                 return collected
             }
 
-            // All concurrent reads should see the same value
             #expect(results.count == iterations)
             #expect(results.allSatisfy { $0 == 42 })
         }
